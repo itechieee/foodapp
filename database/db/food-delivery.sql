@@ -1,0 +1,1299 @@
+-- phpMyAdmin SQL Dump
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:3306
+-- Generation Time: Apr 20, 2019 at 03:02 PM
+-- Server version: 5.7.21
+-- PHP Version: 7.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `food-delivery`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `aId` int(11) NOT NULL AUTO_INCREMENT,
+  `aFirstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aLastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aEmail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aPassword` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aRememberToken` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `aUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`aId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`aId`, `aFirstName`, `aLastName`, `aEmail`, `aPassword`, `aRememberToken`, `aCreatedAt`, `aUpdatedAt`) VALUES
+(1, 'admin', '', 'admin@kopatech.com', '$2y$10$6Ksg2vVCXpGBHeumNSO.jOvzm354oweUpNR2wzv1OZEo9mdOuNpsm', '', '2019-03-15 11:54:26', '2019-03-14 18:30:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adminoffer`
+--
+
+DROP TABLE IF EXISTS `adminoffer`;
+CREATE TABLE IF NOT EXISTS `adminoffer` (
+  `aoffId` int(11) NOT NULL AUTO_INCREMENT,
+  `aoffTitle` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aoffCode` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aoffUsers` tinyint(1) NOT NULL,
+  `aoffPlatform` tinyint(1) NOT NULL,
+  `aoffMinTransAmt` tinyint(4) NOT NULL,
+  `aoffValueType` tinyint(1) NOT NULL,
+  `aoffValue` tinyint(4) NOT NULL,
+  `aoffMaxValue` smallint(6) NOT NULL,
+  `aoffStartDate` date NOT NULL,
+  `aoffEndDate` date NOT NULL,
+  `aoffStartTime` time NOT NULL,
+  `aoffEndTime` time NOT NULL,
+  `aoffUserLimit` tinyint(4) NOT NULL,
+  `aoffTotalLimit` int(11) NOT NULL,
+  `aoffUsingGap` time NOT NULL,
+  `aoffDays` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aoffStatus` tinyint(1) NOT NULL,
+  `aoffCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `aoffUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`aoffId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `city`
+--
+
+DROP TABLE IF EXISTS `city`;
+CREATE TABLE IF NOT EXISTS `city` (
+  `cityId` int(11) NOT NULL AUTO_INCREMENT,
+  `cityName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cityState` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cityChargeType` tinyint(1) NOT NULL,
+  `cityFlatDeliveryCharge` float(4,2) NOT NULL,
+  `cityMinDistanceMiles` float(4,2) NOT NULL,
+  `cityMinDeliveryCharge` float(4,2) NOT NULL,
+  `cityDeliveryCharge` float(4,2) NOT NULL COMMENT 'delivery charge per mile or km',
+  `cityArea` text COLLATE utf8mb4_unicode_ci COMMENT 'google map polyline',
+  `cityStatus` tinyint(1) NOT NULL,
+  `cityCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `cityUpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cityId`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `city`
+--
+
+INSERT INTO `city` (`cityId`, `cityName`, `cityState`, `cityChargeType`, `cityFlatDeliveryCharge`, `cityMinDistanceMiles`, `cityMinDeliveryCharge`, `cityDeliveryCharge`, `cityArea`, `cityStatus`, `cityCreatedAt`, `cityUpdatedAt`) VALUES
+(1, 'Maitland ready', 'Florida', 1, 1.00, 0.00, 0.00, 0.00, NULL, 1, '2019-03-22 08:01:44', '2019-03-23 05:42:57'),
+(2, 'Maitlandsa', 'Florida', 1, 1.00, 0.00, 0.00, 0.00, NULL, 1, '2019-03-22 08:06:33', '2019-03-22 08:06:33'),
+(3, 'Somerville', 'Massachusetts', 2, 0.00, 5.00, 20.00, 2.00, NULL, 1, '2019-03-22 08:18:39', '2019-03-22 08:18:39'),
+(4, 'Grand Rapids', 'Michigan', 2, 0.00, 10.00, 50.00, 4.00, NULL, 1, '2019-03-22 08:19:46', '2019-03-22 08:19:46'),
+(5, 'Alsip', 'Illinois', 1, 15.00, 0.00, 0.00, 0.00, NULL, 1, '2019-03-23 08:21:44', '2019-03-23 08:21:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cmspages`
+--
+
+DROP TABLE IF EXISTS `cmspages`;
+CREATE TABLE IF NOT EXISTS `cmspages` (
+  `cmsId` int(11) NOT NULL AUTO_INCREMENT,
+  `cmsTitle` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cmsMetaKeyword` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cmsMetaDescription` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cmsPageContent` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cmsStatus` tinyint(1) NOT NULL,
+  `cmsCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cmsUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cmsDeletedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`cmsId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cuisines`
+--
+
+DROP TABLE IF EXISTS `cuisines`;
+CREATE TABLE IF NOT EXISTS `cuisines` (
+  `cusinId` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `cusinName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cusinStatus` tinyint(1) NOT NULL,
+  `cusinCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cusinUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `cusinDeletedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`cusinId`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cuisines`
+--
+
+INSERT INTO `cuisines` (`cusinId`, `cusinName`, `cusinStatus`, `cusinCreatedAt`, `cusinUpdatedAt`, `cusinDeletedAt`) VALUES
+(1, 'soup1', 1, '2019-03-25 07:08:15', '2019-03-25 07:08:15', '0000-00-00 00:00:00'),
+(2, 'vegitable soup', 1, '2019-03-25 07:08:25', '2019-03-25 07:08:25', '0000-00-00 00:00:00'),
+(3, 'chicken soup with chicken fry', 1, '2019-03-25 07:08:56', '2019-03-25 07:08:56', '0000-00-00 00:00:00'),
+(4, 'non veg soup', 1, '2019-03-25 07:09:10', '2019-03-25 07:09:10', '0000-00-00 00:00:00'),
+(5, '7 up drinks', 1, '2019-03-25 07:09:36', '2019-03-25 07:09:36', '0000-00-00 00:00:00'),
+(6, 'onion with mutton fry', 1, '2019-03-25 07:10:14', '2019-03-25 07:10:14', '0000-00-00 00:00:00'),
+(7, 'swan fry', 1, '2019-03-25 07:10:31', '2019-03-25 07:10:31', '0000-00-00 00:00:00'),
+(8, 'crow leg fry', 1, '2019-03-25 07:10:45', '2019-03-25 07:10:45', '0000-00-00 00:00:00'),
+(9, 'vrow wings', 1, '2019-03-25 07:10:54', '2019-03-25 07:10:54', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2016_06_01_000001_create_oauth_auth_codes_table', 1),
+(4, '2016_06_01_000002_create_oauth_access_tokens_table', 1),
+(5, '2016_06_01_000003_create_oauth_refresh_tokens_table', 1),
+(6, '2016_06_01_000004_create_oauth_clients_table', 1),
+(7, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1),
+(8, '2017_10_08_000001_create_oauth_access_token_providers_table', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_access_tokens`
+--
+
+DROP TABLE IF EXISTS `oauth_access_tokens`;
+CREATE TABLE IF NOT EXISTS `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `client_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_access_tokens_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_access_tokens`
+--
+
+INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
+('0095c6c4333556bf1457cbeb3d10bfd2c554c8358478b65802237bdd091980ce204e6d552f52af10', 1, 2, NULL, '[]', 0, '2019-03-16 07:54:26', '2019-03-16 07:54:26', '2020-03-16 13:24:26'),
+('00bfe932c526ef34c87fc3a110b535d1515140afb80d7776fcf1846d494e8116aec693cbe91b7849', 1, 2, NULL, '[]', 0, '2019-03-16 05:10:31', '2019-03-16 05:10:31', '2020-03-16 10:40:31'),
+('041fdeab5959d0067010379c998c1476cf6cfc9755d167e38a5f686994dcfb56c2453b83adf97ba8', 1, 2, NULL, '[]', 0, '2019-03-22 08:40:32', '2019-03-22 08:40:32', '2020-03-22 14:10:32'),
+('043fcc7d42463674502d7f8ad03e1b44790086616fa74fccb942a73ccbc0fa479db3e6dec3aebe19', 1, 2, NULL, '[]', 0, '2019-03-18 08:33:42', '2019-03-18 08:33:42', '2020-03-18 14:03:42'),
+('0600049e393377341b318b6dff1b33695f02f36d382eca4bef05e032fb22efb073a0ea4dadc28380', 1, 2, NULL, '[]', 0, '2019-03-18 07:37:49', '2019-03-18 07:37:49', '2020-03-18 13:07:49'),
+('070924011d44a25f87239f3e979044720b88da1ab3b23d33ad078357a4f6e4fa868b563c771573d6', 1, 2, NULL, '[]', 0, '2019-03-20 01:52:30', '2019-03-20 01:52:30', '2020-03-20 07:22:30'),
+('0b4dc32f3ffac7bba0878a119b7e99fdce674984f490fde6d602b37905a77baacb56dc6d3a80146a', 1, 2, NULL, '[]', 0, '2019-03-23 04:34:58', '2019-03-23 04:34:58', '2020-03-23 10:04:58'),
+('0c474168c8bbacd29827f5785371068d4c4a3ee5bf36efea696c4204950f572feb3a8bf3e531796f', 1, 2, NULL, '[]', 0, '2019-03-16 08:25:56', '2019-03-16 08:25:56', '2020-03-16 13:55:56'),
+('103c3af6565c4a753a67141fb6906c20ba1668fc96c3b86b3f53b36f233d45c85b209c2be1896a9e', 1, 2, NULL, '[]', 0, '2019-03-19 06:25:17', '2019-03-19 06:25:17', '2020-03-19 11:55:17'),
+('11ca459a323a646a3246170c810ad623eecc2ef646be6e61e63c49b6e57fa07d3b6ab1b4db7407df', 1, 2, NULL, '[]', 0, '2019-03-18 03:56:31', '2019-03-18 03:56:31', '2020-03-18 09:26:31'),
+('13e3b14c4f997505e60d830c4d4bc9daf0f82d6a9c5eac9c2a5ece0e9d675acc1983bc6caee0b72d', 1, 2, NULL, '[]', 0, '2019-03-16 05:20:27', '2019-03-16 05:20:27', '2020-03-16 10:50:27'),
+('1486e843bf481419341201c40b1439e2afa02af9289cf2b90331c104507baae33d90c3e133c1de53', 1, 2, NULL, '[\"*\"]', 0, '2019-03-14 08:33:18', '2019-03-14 08:33:18', '2020-03-14 14:03:18'),
+('159f32ab8b9de03bd15c22558edc6642a581478243422e5615a79c1d70f26d555d9a42f3ff7b26f6', 1, 2, NULL, '[]', 0, '2019-03-16 01:10:42', '2019-03-16 01:10:42', '2020-03-16 06:40:42'),
+('18f5ebe8c36b680a18134790374c0aece72f38472aa9e0f07b2a6ae9ffaf36e1a42eb31a8762e9fc', 1, 2, NULL, '[]', 0, '2019-03-16 03:25:35', '2019-03-16 03:25:35', '2020-03-16 08:55:35'),
+('1a32e93dcbef5005b372667f845e9d314fd13250dcf3de2a82c5babe47b1b913ddfa43c0e800aacd', 1, 2, NULL, '[]', 0, '2019-03-20 06:38:05', '2019-03-20 06:38:05', '2020-03-20 12:08:05'),
+('1fcd4e0df28f2d005c6b50b88856dadc71da33e9c9f664f755f124a51a35877cbfe6149ac3827b93', 1, 2, NULL, '[]', 0, '2019-03-16 00:29:11', '2019-03-16 00:29:11', '2020-03-16 05:59:11'),
+('241f440f9ccefb00b54262a6cac7ddabfd0ad08c4f0ecf803463e07930d3861ae626dceb03ad7bd5', 1, 2, NULL, '[]', 0, '2019-03-19 06:31:09', '2019-03-19 06:31:09', '2020-03-19 12:01:09'),
+('2468df6a729c1493d3eef636a4ffc19f62b195848dea13457029eade414482825d81135cf945dbc2', 1, 2, NULL, '[]', 0, '2019-03-16 02:00:00', '2019-03-16 02:00:00', '2020-03-16 07:30:00'),
+('271096855c94ff0877d77fae95b9bb29b7d7cfc6f702acac93c6a25f0e87961a14708544babcb87e', 1, 2, NULL, '[]', 0, '2019-03-16 06:15:02', '2019-03-16 06:15:02', '2020-03-16 11:45:02'),
+('2871c994821846dd6e0c2839d429c25885c7cbbe6bbf6b2c7fffac7cdb5a3bf388c725bac49152ec', 1, 2, NULL, '[]', 0, '2019-03-21 23:49:36', '2019-03-21 23:49:36', '2020-03-22 05:19:36'),
+('2cc8ff9320faae4f13e28f079460254961fafd63f57bd3211f65c5c064d02023bd5b3f65f6f05e7b', 1, 2, NULL, '[]', 0, '2019-03-21 23:52:27', '2019-03-21 23:52:27', '2020-03-22 05:22:27'),
+('30debe8307fc0181b86980fe9dbb02a6d49daaee2433cf246359c125d0133347ec717ab76d8558ed', 1, 2, NULL, '[\"*\"]', 0, '2019-01-05 00:38:29', '2019-01-05 00:38:29', '2020-01-05 06:08:29'),
+('338ec88ce9aee9000c28a801eaa2cf42ac375e9ec53797ab4f9c4753848e85055e9156aba6b10359', 1, 2, NULL, '[\"*\"]', 0, '2019-01-05 01:33:00', '2019-01-05 01:33:00', '2020-01-05 07:03:00'),
+('3519ed560d12f9616ddda5d680855229c207551c5d5c198ba5e4fae34d24b9875950538a9c5a14b2', 1, 2, NULL, '[]', 0, '2019-03-23 00:27:57', '2019-03-23 00:27:57', '2020-03-23 05:57:57'),
+('38db8bfd1c6c9647074c4a49305759fb976b935253654c67915ce3ebdcfab617d33efac0b8da962e', NULL, 2, NULL, '[]', 0, '2019-01-04 23:19:33', '2019-01-04 23:19:33', '2020-01-05 04:49:33'),
+('3b0b22404be69b3833062523e7ac719a4fe47c627526bbcc5b66b905472c38a84ddbb4a703bd1842', 1, 2, NULL, '[\"*\"]', 0, '2019-03-15 04:33:49', '2019-03-15 04:33:49', '2020-03-15 10:03:49'),
+('3dc6d7af06a628bccf5d8c325331abd9890d522a98f0bdbf2bf14ae07dabae7ad4160482e607fc4a', 1, 2, NULL, '[]', 0, '2019-03-19 02:25:50', '2019-03-19 02:25:50', '2020-03-19 07:55:50'),
+('3e9c166fc9ae600d70e3552e036a60e5a03f54504d6b78df8fcee7c2f63325c13aafaf16a84d3a14', 1, 2, NULL, '[]', 0, '2019-03-16 06:42:42', '2019-03-16 06:42:42', '2020-03-16 12:12:42'),
+('3eac1a60b671ff3664580e9d059e4a25e22874dd8f8ae1e412b443b5657df159ba002173ec947feb', 1, 2, NULL, '[]', 0, '2019-03-18 02:50:27', '2019-03-18 02:50:27', '2020-03-18 08:20:27'),
+('3f9ad5638a619f0080b9c44d0d4b2f7ddeda6d08353f7e2567840fcce273157eae96a2af4c769344', 1, 2, NULL, '[]', 0, '2019-03-18 01:29:50', '2019-03-18 01:29:50', '2020-03-18 06:59:50'),
+('404ef070985ee0638fc3f68a918851f054ffae1be6822afef26f9683105a75ba91caa4d30ba89776', 1, 2, NULL, '[]', 0, '2019-03-16 01:54:30', '2019-03-16 01:54:30', '2020-03-16 07:24:30'),
+('429b9faa205bf2ed1ab41df755a1bc526950c70876599fc363227089b9ae8cb22db505033c4e0556', 1, 2, NULL, '[]', 0, '2019-03-16 03:27:35', '2019-03-16 03:27:35', '2020-03-16 08:57:35'),
+('42fc523faf7cf45f981ccfd6af53d149d2038bf4afae25dd885cfc3e1693f5d09836de03aec9dca4', 1, 2, NULL, '[]', 0, '2019-03-22 05:32:17', '2019-03-22 05:32:17', '2020-03-22 11:02:17'),
+('43a825e6c5bee7025de027e1614d293b8b2a88423bd620009939836fc5c424e0b362dd55fd6eeaa1', 1, 2, NULL, '[]', 0, '2019-03-16 05:03:20', '2019-03-16 05:03:20', '2020-03-16 10:33:20'),
+('43c823b4cce97184426013c715e2db831e190ec1750cfec1813c99b665e492dbb2b79d843a6427a1', 1, 2, NULL, '[]', 0, '2019-03-19 02:30:34', '2019-03-19 02:30:34', '2020-03-19 08:00:34'),
+('459468ef8ea23e65d9ec4f54118bc2e655bca477381b9415dc62bf853c6d4d8c6e0a95a367e8d580', 1, 2, NULL, '[\"*\"]', 0, '2019-03-14 00:14:17', '2019-03-14 00:14:17', '2020-03-14 05:44:17'),
+('47afce3d521158de92ccf1f0939452a519049af52d4aa0dc5348a2647a320a0540bda1f27e20f10b', 1, 2, NULL, '[]', 0, '2019-03-25 08:32:41', '2019-03-25 08:32:41', '2020-03-25 14:02:41'),
+('4bb57d31a4f6a212f667e120f93dd69660fe7119ec5e0874eb23501adbeee26d21ad7116b94fec14', 1, 2, NULL, '[]', 0, '2019-03-20 01:46:52', '2019-03-20 01:46:52', '2020-03-20 07:16:52'),
+('4ef8c27fb3f542c6dfb791f6834dc4b16a5569cf39c629a680ff4158c9342f4d36ef1d4c5b9877e0', 1, 2, NULL, '[]', 0, '2019-03-18 00:30:20', '2019-03-18 00:30:20', '2020-03-18 06:00:20'),
+('50e2043dd75d61750d29512e7576cd3f4324f16d2228519e3d2feaa1b6879f75a4453f620736a079', 1, 2, NULL, '[]', 0, '2019-03-16 05:16:09', '2019-03-16 05:16:09', '2020-03-16 10:46:09'),
+('51465241e05b4228f7b54a19d1f9e5e1247c41a099ee91a53519effb4f7fa7dcf70a1165ceeb4ca0', 1, 2, NULL, '[]', 0, '2019-03-18 04:55:22', '2019-03-18 04:55:22', '2020-03-18 10:25:22'),
+('538b59f9a5c0de2c903727d09999be46cf645216481a435507b3285373d76b4bab8619be83aff2d4', 1, 2, NULL, '[]', 0, '2019-03-24 23:59:40', '2019-03-24 23:59:40', '2020-03-25 05:29:40'),
+('539aa25e2ef50f86f93d7eddffe666b782292a80d497a26c569f52cd57e378bef505b120b68bbc9e', 1, 2, NULL, '[]', 0, '2019-03-20 02:03:57', '2019-03-20 02:03:57', '2020-03-20 07:33:57'),
+('568cb0aa197a7df68f351eedf976342287cfe5d5db32d44e9ab3d84ecfc9330e202947fc44a3250d', 1, 2, NULL, '[]', 0, '2019-03-16 05:32:55', '2019-03-16 05:32:55', '2020-03-16 11:02:55'),
+('5743320e552ba2c5387f6dbb29dd14b825860b9063d95f54adbeb1e5a4c4ba80c42b7a4f5facd853', 1, 2, NULL, '[\"*\"]', 0, '2019-03-15 04:33:26', '2019-03-15 04:33:26', '2020-03-15 10:03:26'),
+('5d27775f1f44bc1d3454fcd166e2e9d848b2c2ee0cb8e12ea889f3ab42db31bbdb0cec8241423fe8', 1, 2, NULL, '[]', 0, '2019-03-15 07:19:23', '2019-03-15 07:19:23', '2020-03-15 12:49:23'),
+('5f2b82eac2558f19bd5144357a18728aa016a31188701d6c1a1f7f47e037ffc8a06b29bad1adb40f', 1, 2, NULL, '[]', 0, '2019-03-18 07:13:26', '2019-03-18 07:13:26', '2020-03-18 12:43:26'),
+('5f455f564a8ccdd4eeb1eea4fa767879ecd9982d5daaf2c5a6c2bcf50972275167f05a0b612e1686', 1, 2, NULL, '[]', 0, '2019-03-16 02:10:51', '2019-03-16 02:10:51', '2020-03-16 07:40:51'),
+('5f6ef8400ed6db6571649380d742d99a715cd97a0f6e5f2e1e3828b5d9e218b09c4d0dbd5614e84d', 1, 2, NULL, '[]', 0, '2019-03-23 00:53:37', '2019-03-23 00:53:37', '2020-03-23 06:23:37'),
+('60fce2893148b36d3a3d2bb8ad2cca53f7d54c98ee37bfefa855811f6b65d539255803e94f5af88e', 1, 2, NULL, '[]', 0, '2019-03-16 01:09:55', '2019-03-16 01:09:55', '2020-03-16 06:39:55'),
+('6120cacf23f1a4f4d6627a00401c28d75fac295107126921939500f04e9524cd402d8f771e476fbe', 1, 2, NULL, '[]', 0, '2019-03-18 05:01:56', '2019-03-18 05:01:56', '2020-03-18 10:31:56'),
+('66e6a1bc04aaddbf303476c55bda2569a06e60f854e9abf8b5fe08ed45309573bf98325c6546db1f', 1, 2, NULL, '[]', 0, '2019-03-25 04:58:09', '2019-03-25 04:58:09', '2020-03-25 10:28:09'),
+('6802bc7364e652868502d98a011ee32a1f11e738eb960f4348358538c93e8d10656c3b0e6942120f', 1, 2, NULL, '[]', 0, '2019-03-19 04:06:09', '2019-03-19 04:06:09', '2020-03-19 09:36:09'),
+('6b1fb7a9bf87d75f006b34e1d349526dd24fa003607d2067c12cd9755eeeac78363ea37734190788', 1, 2, NULL, '[]', 0, '2019-03-16 03:27:42', '2019-03-16 03:27:42', '2020-03-16 08:57:42'),
+('6c8e3d1ffe09ab82c8d1ad7c64cb4146842529f0ed39d0e88f16f40686e87cf36d53b8949bbe77b5', 1, 2, NULL, '[]', 0, '2019-03-15 07:19:10', '2019-03-15 07:19:10', '2020-03-15 12:49:10'),
+('6d523e36472a0eacaa433045e866cb3539cd8d89e4f8917ee2512380d127a2cdd703a00a3bffd739', 1, 2, NULL, '[\"*\"]', 0, '2019-03-15 04:47:27', '2019-03-15 04:47:27', '2020-03-15 10:17:27'),
+('726413c5d6837c082a32261961e983a146b97dcf91b9e4bb2b18f4761a9e87378c92f7d90acc38ba', 1, 2, NULL, '[]', 0, '2019-03-18 01:07:37', '2019-03-18 01:07:37', '2020-03-18 06:37:37'),
+('746d67d6d8541e2497242ce88656d380dbc42f0014d527c35ff50f4bf95ae839324d546728e02a64', 1, 2, NULL, '[]', 0, '2019-03-22 07:23:27', '2019-03-22 07:23:27', '2020-03-22 12:53:27'),
+('7b898cfc8e549548306e54ecf84ad2c6782788cc167303d7ffbf6f9d80667f184f0979db4d1c6639', 1, 2, NULL, '[]', 0, '2019-03-18 00:50:51', '2019-03-18 00:50:51', '2020-03-18 06:20:51'),
+('7dbb4ace7d8971b2e487f9aad0a68bdef419aed9cb01b5fe58fac6f8ca2a8c4cc5d0628d61ca33e9', 1, 2, NULL, '[]', 0, '2019-03-16 01:41:18', '2019-03-16 01:41:18', '2020-03-16 07:11:18'),
+('807ab3c4e44e9b54205517d1da54ecc2622cf1a63c0003e961df0f30e89191a4cfa9788facdef109', 1, 2, NULL, '[]', 0, '2019-03-23 00:53:38', '2019-03-23 00:53:38', '2020-03-23 06:23:38'),
+('81b2892f063369939bdb5a65fe0d39bed6c6c8e6eb39c493fa937cf3c8df944f0fe969d5bd5118d9', 1, 2, NULL, '[]', 0, '2019-03-18 01:31:50', '2019-03-18 01:31:50', '2020-03-18 07:01:50'),
+('8207ae0cbe4f88c00c65c7b7936137700b14e9aa99e4a86e9feaf3ae3a6c3434de738da298de9079', 1, 2, NULL, '[]', 0, '2019-03-16 03:26:59', '2019-03-16 03:26:59', '2020-03-16 08:56:59'),
+('82f242a39ebbd7ddbe52c814fce31595cf3d594fd9b4548168d03efd4605cd5ba2d9fa9585d6f9b7', 1, 2, NULL, '[\"*\"]', 0, '2019-01-04 23:16:42', '2019-01-04 23:16:42', '2020-01-05 04:46:42'),
+('847a68304ba6a61c204056fc2df79d9f4ae6e3a64d20195f975eda55fd0218f5e9cac3eac8d7a61f', 1, 2, NULL, '[]', 0, '2019-03-16 07:07:34', '2019-03-16 07:07:34', '2020-03-16 12:37:34'),
+('890ae927ec314f5b3c08d6f0ea962cba5849327fb7caf438977bc2eb9490b96f832ec045db6cef6e', 1, 2, NULL, '[]', 0, '2019-03-22 07:20:02', '2019-03-22 07:20:02', '2020-03-22 12:50:02'),
+('897a1f202a5cb2ce18451a62e24ac38ca23919216c8b72e2577fbc32eeb28031d406d639208671a7', 1, 2, NULL, '[]', 0, '2019-03-19 01:38:41', '2019-03-19 01:38:41', '2020-03-19 07:08:41'),
+('897cb2b9b96370c5bbe746066769e1ad12fe299c5b97c3d432e389774e0e9078952db34fb050cbaf', 1, 2, NULL, '[]', 0, '2019-03-16 01:42:01', '2019-03-16 01:42:01', '2020-03-16 07:12:01'),
+('89df11cfd210d6c0ddfbff5d286a6b38be2cc7d67efb9971832a0e924c71def8647eee8b66b3239f', 1, 2, NULL, '[]', 0, '2019-03-22 06:41:33', '2019-03-22 06:41:33', '2020-03-22 12:11:33'),
+('8a76019e2b84afd46dd76c2cd52abec98d96d7109cd477d4538673f904aca001740945db7bbf8ece', 1, 2, NULL, '[]', 0, '2019-03-25 04:58:11', '2019-03-25 04:58:11', '2020-03-25 10:28:11'),
+('8c3be3e2b12f6ea63323822b7e4220931208bdfe633b7eaee7c6198b97709675a0d3b1498b40a2ff', 1, 2, NULL, '[]', 0, '2019-03-22 05:15:54', '2019-03-22 05:15:54', '2020-03-22 10:45:54'),
+('8d4504c3ab57497f856b7d4bdf04f68c1df4913e460e887424a1228bdbd47734178cae9395f3dfba', 1, 2, NULL, '[]', 0, '2019-03-18 00:09:32', '2019-03-18 00:09:32', '2020-03-18 05:39:32'),
+('926668e3f498955df138b4831e0b80368a52b69020ac4e66746cd13f90a4850f7b28dd816df56acf', 1, 2, NULL, '[]', 0, '2019-04-08 04:31:47', '2019-04-08 04:31:47', '2020-04-08 10:01:47'),
+('99596305e79728ea1132a457803c0e14ae2fda2d20cc0506a1caf9f9ea75d9dfc2d27721b1b2900a', 1, 2, NULL, '[\"*\"]', 0, '2019-03-15 02:02:28', '2019-03-15 02:02:28', '2020-03-15 07:32:28'),
+('9a0d8cff8e61e194989dd2682f09ae23b5a73ab1a2382ab236d6a221595680fc24a26c9285fba1dd', 1, 2, NULL, '[]', 0, '2019-03-25 00:53:49', '2019-03-25 00:53:49', '2020-03-25 06:23:49'),
+('9b37101838342a0173031261deedae01ba3166ed20701d4ebe10b98cd16bf5df60d20d60b8065bd9', 1, 2, NULL, '[]', 0, '2019-03-22 04:50:03', '2019-03-22 04:50:03', '2020-03-22 10:20:03'),
+('9bb38dbf9a27ea3b04c3d3668b3103e4117d784af4e520f2d9e213c89ef8c85c4436286fd5f2e0f9', 1, 2, NULL, '[]', 0, '2019-03-16 08:14:13', '2019-03-16 08:14:13', '2020-03-16 13:44:13'),
+('9d2566701b624a89c3b1d1dd5bd78e867c4d3cb261e0b27d6ea9286eabc64dbe5adf40230fe65cc3', 1, 2, NULL, '[]', 0, '2019-04-08 04:31:47', '2019-04-08 04:31:47', '2020-04-08 10:01:47'),
+('a0902b54266ab54c798979d180af6e2bd29f64f250d5f5809b02fb52a977ddd5bd24a2a9c103e62f', 1, 2, NULL, '[]', 0, '2019-03-23 00:53:38', '2019-03-23 00:53:38', '2020-03-23 06:23:38'),
+('a2431370c48fb6c9cfad2f016e028f4b37b5ee5fd4b1a207a47cfc48820df8a13ffa95eb2dea66c8', 1, 2, NULL, '[]', 0, '2019-03-18 06:16:25', '2019-03-18 06:16:25', '2020-03-18 11:46:25'),
+('a4a5a7b84f28237b99cb3c8d595a4a1cdcb3de5084b89f0670e3c731fa3493ebd667b55ce9c49c72', 1, 2, NULL, '[]', 0, '2019-03-18 04:02:54', '2019-03-18 04:02:54', '2020-03-18 09:32:54'),
+('a4d3a223da589573b53c2ddcbc98a5dd4c9ab537d4437326bfef13ddf342309659f6439105af87b4', 1, 2, NULL, '[]', 0, '2019-03-16 08:38:00', '2019-03-16 08:38:00', '2020-03-16 14:08:00'),
+('a75ea1b382d77624c23ca5ac8636114d7ff0da35fa7832c1c0e34faa2267d35e9d5ae415992cbcf0', 1, 2, NULL, '[]', 0, '2019-03-15 07:20:25', '2019-03-15 07:20:25', '2020-03-15 12:50:25'),
+('a8ff5c4c5b0daaf46a8debd4016bca5d06fe23c54bf77c340cbeec1cc18819fefaf38c89311640be', 1, 2, NULL, '[]', 0, '2019-03-25 08:32:39', '2019-03-25 08:32:39', '2020-03-25 14:02:39'),
+('ab495eb1dc3cc3e30129b45a148092732639701e469fd3e1c9378bdba7f8a49695a7465c7be4c45e', 1, 2, NULL, '[]', 0, '2019-03-16 06:40:39', '2019-03-16 06:40:39', '2020-03-16 12:10:39'),
+('ae537adb351108db170c302fe945f7d6b31d71fb910c87f6e5228509fce4a128cb5f9d3c7ad5938d', 1, 2, NULL, '[]', 0, '2019-03-21 08:56:56', '2019-03-21 08:56:56', '2020-03-21 14:26:56'),
+('afbe6113d45a92d46791e2f420fdb14585338b068697a94c96b71e9be5e42be3917fbbf7081bf17a', 1, 2, NULL, '[]', 0, '2019-03-20 02:00:08', '2019-03-20 02:00:08', '2020-03-20 07:30:08'),
+('b0a912c9686b60a4d8a1bc5fbf39c24b5a8f084b3ffd538af9a18fc1cc6644a89e1307142b1d227d', 1, 2, NULL, '[]', 0, '2019-03-23 00:53:37', '2019-03-23 00:53:37', '2020-03-23 06:23:37'),
+('b336e9c17005e5e8f74ebf564be5aeac912c427c2da0d2390a8a47c84c74488a7604919dff94beeb', 1, 2, NULL, '[]', 0, '2019-03-15 06:52:41', '2019-03-15 06:52:41', '2020-03-15 12:22:41'),
+('b33d2f7099aeeef5e88edecba4d1ca6b94e028abf14b1268c8ea4b3bbb4df7238ad06466cd169c22', 1, 2, NULL, '[]', 0, '2019-03-22 05:20:32', '2019-03-22 05:20:32', '2020-03-22 10:50:32'),
+('b3bd517dd46d5a5e6107dee33ed06c316c71d2e1e5251c7fa60376771ddc16052454ab59a33a2500', 1, 2, NULL, '[]', 0, '2019-03-23 00:53:38', '2019-03-23 00:53:38', '2020-03-23 06:23:38'),
+('b3e947f7d62ec86293e8a2c7196a6a1d0c398d8bf36c8bd2bc3b959b3025a204e6e8ab87198b32b6', 1, 2, NULL, '[]', 0, '2019-03-16 05:04:51', '2019-03-16 05:04:51', '2020-03-16 10:34:51'),
+('b6b000b7d0bb0cea0a09ca824a31bcb802293398b7afc9fa0e42013278aa0ea951982718eaa81334', 1, 2, NULL, '[]', 0, '2019-03-18 07:38:18', '2019-03-18 07:38:18', '2020-03-18 13:08:18'),
+('b70ab445d38bf21ac4d517c793d97ba70c99732cad94cdebe24aa41fcc1784b074d825ce31cd5fe0', 1, 2, NULL, '[]', 0, '2019-03-18 07:34:07', '2019-03-18 07:34:07', '2020-03-18 13:04:07'),
+('b735f2fb9ec6f25269df7c10ffba099b38d668cee55239f59aaa23a2891e77923b36da8f6fbbfbd6', 1, 2, NULL, '[]', 0, '2019-03-16 03:19:10', '2019-03-16 03:19:10', '2020-03-16 08:49:10'),
+('b9320ba51276c2dfe3f85b026206408437d25aca25a671937a5ff3f4657ef2c9627e44ef588bfd63', 1, 2, NULL, '[]', 0, '2019-03-18 06:39:47', '2019-03-18 06:39:47', '2020-03-18 12:09:47'),
+('bfbcf2de1833ed217667cc3b567046ab16c31c0e76a31ba98b9629e0b17b1ff29252cf1bf45352a3', 1, 2, NULL, '[\"*\"]', 1, '2019-01-04 23:11:29', '2019-01-04 23:11:29', '2020-01-05 04:41:29'),
+('c54a90c3a7f1fc14ef56f6c218e4eb6ea17c38b20f93a0d05ec5153825b0e6fd8b43cf4e89b15d16', 1, 2, NULL, '[]', 0, '2019-03-18 02:14:36', '2019-03-18 02:14:36', '2020-03-18 07:44:36'),
+('c5e2689fafb8e94f2da8a62ddb4e017b0532714b319bc686b97dcd558541d8af453f67487bae2e6a', 1, 2, NULL, '[]', 0, '2019-03-19 23:32:54', '2019-03-19 23:32:54', '2020-03-20 05:02:54'),
+('c7524bf7aa3ac6bc5a0eb1fbba427c932294bbf1c0acea8868ea78d4eced93b4127be3531c303a8d', 1, 2, NULL, '[]', 0, '2019-03-15 07:19:36', '2019-03-15 07:19:36', '2020-03-15 12:49:36'),
+('c8ac616fd286f274f4567d7ebcbd198d6ae4847d1354fc232f3fe2c1710f3a639afe05421212ecd7', 1, 2, NULL, '[]', 0, '2019-03-18 07:21:17', '2019-03-18 07:21:17', '2020-03-18 12:51:17'),
+('c8d651594eacad8097105f5068c06ca45f8b8f1d11782ebab29f6ed649f41c7beb4c7e1f7618c90c', 1, 2, NULL, '[]', 0, '2019-03-21 23:52:25', '2019-03-21 23:52:25', '2020-03-22 05:22:25'),
+('c9fb8eef8f39443f3ee5cb755fd8a3507e327a07c5edc4c15ad5623e059e443f9bbca154a01873e2', 1, 2, NULL, '[]', 0, '2019-03-18 07:31:09', '2019-03-18 07:31:09', '2020-03-18 13:01:09'),
+('ca7e88d6d273cddb70264c4610f1b365796aa27bc454f7237f69ccd6de237c8dcfa1cea19a7ac177', 1, 2, NULL, '[]', 0, '2019-03-24 23:59:44', '2019-03-24 23:59:44', '2020-03-25 05:29:44'),
+('caac35eb3f22d736171b084424f7778e4388b438a97171f19b47d162f15786f93fd81fdc6c3c52d4', 1, 2, NULL, '[]', 0, '2019-03-18 00:32:47', '2019-03-18 00:32:47', '2020-03-18 06:02:47'),
+('cae9a86f38bf87215c91fca723d72ef42585f535767c87b1223c715c4c99cf5979ba9bd65c9e0830', 1, 2, NULL, '[]', 0, '2019-03-18 02:39:25', '2019-03-18 02:39:25', '2020-03-18 08:09:25'),
+('cd1cdfd3aa92e2c1430fd50b72fbab064cfffcbc674ea2493944e3e7fd9f41756c9de3f77ada1a00', 1, 2, NULL, '[]', 0, '2019-03-16 03:03:41', '2019-03-16 03:03:41', '2020-03-16 08:33:41'),
+('cd6850ec8a33f8c783b7776cf3022d8f11429ffe6daf94408017a14c4e7c73073220ebcc28e05874', 1, 2, NULL, '[]', 0, '2019-03-22 05:20:58', '2019-03-22 05:20:58', '2020-03-22 10:50:58'),
+('cf311969bf0c6ede0e20c735387230a1311f7f030bbf6294786567db87c1edbea17c5cfd69961774', 1, 2, NULL, '[]', 0, '2019-03-23 08:32:42', '2019-03-23 08:32:42', '2020-03-23 14:02:42'),
+('d14b7f15b77ff164bc48bfa7be0b155c872d869460796bb6be1d0cb00f21d8f8c2e2a4f0da929729', 1, 2, NULL, '[]', 0, '2019-03-18 07:28:33', '2019-03-18 07:28:33', '2020-03-18 12:58:33'),
+('d22daf1894047140399fb37f2234e03374ef51afe6f9b77f289dae57e4716f0116f6e18e9b286a04', 1, 2, NULL, '[]', 0, '2019-03-18 01:35:04', '2019-03-18 01:35:04', '2020-03-18 07:05:04'),
+('d2639ae054df14ab47e0c77a03eb171eff852312ea39b711f06b6bc7afa9c9734caeb1c1bdd0eeb0', 1, 2, NULL, '[]', 0, '2019-03-16 06:25:27', '2019-03-16 06:25:27', '2020-03-16 11:55:27'),
+('d2888ff6eba15958fe06890847cd87645e9a06a33ac5c967ab41d9e5c5bcbca42ab60afe9ef1b9ca', 1, 2, NULL, '[]', 0, '2019-03-16 01:58:30', '2019-03-16 01:58:30', '2020-03-16 07:28:30'),
+('d818d5ae60b1ed911f70d89787d7db995346adbba7acd174d146092063ef55e8c2aef808f42cdd09', 1, 2, NULL, '[]', 0, '2019-03-19 02:18:28', '2019-03-19 02:18:28', '2020-03-19 07:48:28'),
+('d83f871c6c69d1ae0dfd94e40774e40f4e1a8e139884a32997af5e8f9d2a3de5d1d8bc96f687b009', 1, 2, NULL, '[]', 0, '2019-03-16 03:27:27', '2019-03-16 03:27:27', '2020-03-16 08:57:27'),
+('d931674c5363e0811cca1d646fc6f28f04d6559f68fa08d5986771ca85bc681b1947021aa2a631bb', 1, 2, NULL, '[\"*\"]', 0, '2019-03-14 08:52:14', '2019-03-14 08:52:14', '2020-03-14 14:22:14'),
+('de1d98470f5903937b53f4ba093574b240f11b0553248b83a8a0f176b644e930fee1e91addebc197', 3, 5, 'AppName', '[]', 0, '2019-04-20 06:52:46', '2019-04-20 06:52:46', '2020-04-20 14:52:46'),
+('e2acb8967081541b41f36cd62c64c9d2c034fc6bb90d42bc6c6ded67842652494a33b37f294fafe6', 3, 5, 'AppName', '[]', 0, '2019-04-20 06:47:54', '2019-04-20 06:47:54', '2020-04-20 14:47:54'),
+('e4269d523d305b69471c9d4d2d5055c3ca1ff1c1ef643ce3b6586b5a4833da1c770e44cd9154abfa', 1, 2, NULL, '[]', 0, '2019-03-16 04:35:30', '2019-03-16 04:35:30', '2020-03-16 10:05:30'),
+('e46d7c753152068960600278bb2f23475c5c8f40ce769a2cea06ead7c4c407c8f4e4cbd5a736c148', 1, 2, NULL, '[]', 0, '2019-03-21 09:00:04', '2019-03-21 09:00:04', '2020-03-21 14:30:04'),
+('e4feb4cb34170b87c0b6682bef743ddf67576c73602e2ad656c46e144fb39e3ff841bf8cc3fef4e8', 1, 2, NULL, '[]', 0, '2019-03-21 09:00:04', '2019-03-21 09:00:04', '2020-03-21 14:30:04'),
+('ea6c55ec17d507e847960f17df708c240c54ce037233d76528ab94fb7a38d5af818b0c3574841dfc', 1, 2, NULL, '[]', 0, '2019-03-18 07:19:31', '2019-03-18 07:19:31', '2020-03-18 12:49:31'),
+('eab289a5c62693368baa0fa3314b21f6cd751ac4edececb83374efdb0b12ba896fcbca31c643189e', 1, 2, NULL, '[]', 0, '2019-03-16 00:29:53', '2019-03-16 00:29:53', '2020-03-16 05:59:53'),
+('f177ecbe17f35f823a6d85c03165374b46ac0ec5e65d1ba79c9361c24c1fcf12ff35a0b8dbe8d7ee', 1, 2, NULL, '[]', 0, '2019-03-18 08:40:10', '2019-03-18 08:40:10', '2020-03-18 14:10:10'),
+('f55f401145bf6c99dbaf9ed728ed38ed035a7b971e6e637f1c671feff0b34b8b6e5968853bc8a84b', 1, 2, NULL, '[]', 0, '2019-03-23 00:53:37', '2019-03-23 00:53:37', '2020-03-23 06:23:37'),
+('f569884bfa538f87c9f47c5e72f57f7011a9b9914bfb41df8b23f78e5519c39149eedfe18a72c65c', 1, 2, NULL, '[]', 0, '2019-03-22 04:48:37', '2019-03-22 04:48:37', '2020-03-22 10:18:37'),
+('f64826de362c56c38652bd54145f13a6fabd697b91f3d257815a89c9453dc176d03c94aaf7b87351', 1, 2, NULL, '[]', 0, '2019-03-22 04:51:01', '2019-03-22 04:51:01', '2020-03-22 10:21:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_access_token_providers`
+--
+
+DROP TABLE IF EXISTS `oauth_access_token_providers`;
+CREATE TABLE IF NOT EXISTS `oauth_access_token_providers` (
+  `oauth_access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provider` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`oauth_access_token_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_access_token_providers`
+--
+
+INSERT INTO `oauth_access_token_providers` (`oauth_access_token_id`, `provider`, `created_at`, `updated_at`) VALUES
+('0095c6c4333556bf1457cbeb3d10bfd2c554c8358478b65802237bdd091980ce204e6d552f52af10', 'admins', '2019-03-16 07:54:26', '2019-03-16 07:54:26'),
+('00bfe932c526ef34c87fc3a110b535d1515140afb80d7776fcf1846d494e8116aec693cbe91b7849', 'admins', '2019-03-16 05:10:31', '2019-03-16 05:10:31'),
+('041fdeab5959d0067010379c998c1476cf6cfc9755d167e38a5f686994dcfb56c2453b83adf97ba8', 'admins', '2019-03-22 08:40:32', '2019-03-22 08:40:32'),
+('043fcc7d42463674502d7f8ad03e1b44790086616fa74fccb942a73ccbc0fa479db3e6dec3aebe19', 'admins', '2019-03-18 08:33:42', '2019-03-18 08:33:42'),
+('0600049e393377341b318b6dff1b33695f02f36d382eca4bef05e032fb22efb073a0ea4dadc28380', 'admins', '2019-03-18 07:37:49', '2019-03-18 07:37:49'),
+('070924011d44a25f87239f3e979044720b88da1ab3b23d33ad078357a4f6e4fa868b563c771573d6', 'admins', '2019-03-20 01:52:31', '2019-03-20 01:52:31'),
+('0b4dc32f3ffac7bba0878a119b7e99fdce674984f490fde6d602b37905a77baacb56dc6d3a80146a', 'admins', '2019-03-23 04:34:58', '2019-03-23 04:34:58'),
+('0c474168c8bbacd29827f5785371068d4c4a3ee5bf36efea696c4204950f572feb3a8bf3e531796f', 'admins', '2019-03-16 08:25:56', '2019-03-16 08:25:56'),
+('103c3af6565c4a753a67141fb6906c20ba1668fc96c3b86b3f53b36f233d45c85b209c2be1896a9e', 'admins', '2019-03-19 06:25:17', '2019-03-19 06:25:17'),
+('11ca459a323a646a3246170c810ad623eecc2ef646be6e61e63c49b6e57fa07d3b6ab1b4db7407df', 'admins', '2019-03-18 03:56:31', '2019-03-18 03:56:31'),
+('13e3b14c4f997505e60d830c4d4bc9daf0f82d6a9c5eac9c2a5ece0e9d675acc1983bc6caee0b72d', 'admins', '2019-03-16 05:20:27', '2019-03-16 05:20:27'),
+('159f32ab8b9de03bd15c22558edc6642a581478243422e5615a79c1d70f26d555d9a42f3ff7b26f6', 'admins', '2019-03-16 01:10:42', '2019-03-16 01:10:42'),
+('18f5ebe8c36b680a18134790374c0aece72f38472aa9e0f07b2a6ae9ffaf36e1a42eb31a8762e9fc', 'admins', '2019-03-16 03:25:35', '2019-03-16 03:25:35'),
+('1a32e93dcbef5005b372667f845e9d314fd13250dcf3de2a82c5babe47b1b913ddfa43c0e800aacd', 'admins', '2019-03-20 06:38:05', '2019-03-20 06:38:05'),
+('1fcd4e0df28f2d005c6b50b88856dadc71da33e9c9f664f755f124a51a35877cbfe6149ac3827b93', 'admins', '2019-03-16 00:29:11', '2019-03-16 00:29:11'),
+('241f440f9ccefb00b54262a6cac7ddabfd0ad08c4f0ecf803463e07930d3861ae626dceb03ad7bd5', 'admins', '2019-03-19 06:31:09', '2019-03-19 06:31:09'),
+('2468df6a729c1493d3eef636a4ffc19f62b195848dea13457029eade414482825d81135cf945dbc2', 'admins', '2019-03-16 02:00:00', '2019-03-16 02:00:00'),
+('271096855c94ff0877d77fae95b9bb29b7d7cfc6f702acac93c6a25f0e87961a14708544babcb87e', 'admins', '2019-03-16 06:15:02', '2019-03-16 06:15:02'),
+('2871c994821846dd6e0c2839d429c25885c7cbbe6bbf6b2c7fffac7cdb5a3bf388c725bac49152ec', 'admins', '2019-03-21 23:49:37', '2019-03-21 23:49:37'),
+('2cc8ff9320faae4f13e28f079460254961fafd63f57bd3211f65c5c064d02023bd5b3f65f6f05e7b', 'admins', '2019-03-21 23:52:27', '2019-03-21 23:52:27'),
+('3519ed560d12f9616ddda5d680855229c207551c5d5c198ba5e4fae34d24b9875950538a9c5a14b2', 'admins', '2019-03-23 00:27:58', '2019-03-23 00:27:58'),
+('3dc6d7af06a628bccf5d8c325331abd9890d522a98f0bdbf2bf14ae07dabae7ad4160482e607fc4a', 'admins', '2019-03-19 02:25:50', '2019-03-19 02:25:50'),
+('3e9c166fc9ae600d70e3552e036a60e5a03f54504d6b78df8fcee7c2f63325c13aafaf16a84d3a14', 'admins', '2019-03-16 06:42:42', '2019-03-16 06:42:42'),
+('3eac1a60b671ff3664580e9d059e4a25e22874dd8f8ae1e412b443b5657df159ba002173ec947feb', 'admins', '2019-03-18 02:50:28', '2019-03-18 02:50:28'),
+('3f9ad5638a619f0080b9c44d0d4b2f7ddeda6d08353f7e2567840fcce273157eae96a2af4c769344', 'admins', '2019-03-18 01:29:50', '2019-03-18 01:29:50'),
+('404ef070985ee0638fc3f68a918851f054ffae1be6822afef26f9683105a75ba91caa4d30ba89776', 'admins', '2019-03-16 01:54:30', '2019-03-16 01:54:30'),
+('429b9faa205bf2ed1ab41df755a1bc526950c70876599fc363227089b9ae8cb22db505033c4e0556', 'users', '2019-03-16 03:27:35', '2019-03-16 03:27:35'),
+('42fc523faf7cf45f981ccfd6af53d149d2038bf4afae25dd885cfc3e1693f5d09836de03aec9dca4', 'admins', '2019-03-22 05:32:17', '2019-03-22 05:32:17'),
+('43a825e6c5bee7025de027e1614d293b8b2a88423bd620009939836fc5c424e0b362dd55fd6eeaa1', 'admins', '2019-03-16 05:03:20', '2019-03-16 05:03:20'),
+('43c823b4cce97184426013c715e2db831e190ec1750cfec1813c99b665e492dbb2b79d843a6427a1', 'admins', '2019-03-19 02:30:34', '2019-03-19 02:30:34'),
+('47afce3d521158de92ccf1f0939452a519049af52d4aa0dc5348a2647a320a0540bda1f27e20f10b', 'admins', '2019-03-25 08:32:41', '2019-03-25 08:32:41'),
+('4bb57d31a4f6a212f667e120f93dd69660fe7119ec5e0874eb23501adbeee26d21ad7116b94fec14', 'admins', '2019-03-20 01:46:52', '2019-03-20 01:46:52'),
+('4ef8c27fb3f542c6dfb791f6834dc4b16a5569cf39c629a680ff4158c9342f4d36ef1d4c5b9877e0', 'admins', '2019-03-18 00:30:20', '2019-03-18 00:30:20'),
+('50e2043dd75d61750d29512e7576cd3f4324f16d2228519e3d2feaa1b6879f75a4453f620736a079', 'admins', '2019-03-16 05:16:09', '2019-03-16 05:16:09'),
+('51465241e05b4228f7b54a19d1f9e5e1247c41a099ee91a53519effb4f7fa7dcf70a1165ceeb4ca0', 'admins', '2019-03-18 04:55:23', '2019-03-18 04:55:23'),
+('538b59f9a5c0de2c903727d09999be46cf645216481a435507b3285373d76b4bab8619be83aff2d4', 'admins', '2019-03-24 23:59:40', '2019-03-24 23:59:40'),
+('539aa25e2ef50f86f93d7eddffe666b782292a80d497a26c569f52cd57e378bef505b120b68bbc9e', 'admins', '2019-03-20 02:03:57', '2019-03-20 02:03:57'),
+('568cb0aa197a7df68f351eedf976342287cfe5d5db32d44e9ab3d84ecfc9330e202947fc44a3250d', 'admins', '2019-03-16 05:32:55', '2019-03-16 05:32:55'),
+('5d27775f1f44bc1d3454fcd166e2e9d848b2c2ee0cb8e12ea889f3ab42db31bbdb0cec8241423fe8', 'admins', '2019-03-15 07:19:23', '2019-03-15 07:19:23'),
+('5f2b82eac2558f19bd5144357a18728aa016a31188701d6c1a1f7f47e037ffc8a06b29bad1adb40f', 'admins', '2019-03-18 07:13:26', '2019-03-18 07:13:26'),
+('5f455f564a8ccdd4eeb1eea4fa767879ecd9982d5daaf2c5a6c2bcf50972275167f05a0b612e1686', 'admins', '2019-03-16 02:10:51', '2019-03-16 02:10:51'),
+('5f6ef8400ed6db6571649380d742d99a715cd97a0f6e5f2e1e3828b5d9e218b09c4d0dbd5614e84d', 'admins', '2019-03-23 00:53:37', '2019-03-23 00:53:37'),
+('60fce2893148b36d3a3d2bb8ad2cca53f7d54c98ee37bfefa855811f6b65d539255803e94f5af88e', 'admins', '2019-03-16 01:09:55', '2019-03-16 01:09:55'),
+('6120cacf23f1a4f4d6627a00401c28d75fac295107126921939500f04e9524cd402d8f771e476fbe', 'admins', '2019-03-18 05:01:56', '2019-03-18 05:01:56'),
+('66e6a1bc04aaddbf303476c55bda2569a06e60f854e9abf8b5fe08ed45309573bf98325c6546db1f', 'admins', '2019-03-25 04:58:09', '2019-03-25 04:58:09'),
+('6802bc7364e652868502d98a011ee32a1f11e738eb960f4348358538c93e8d10656c3b0e6942120f', 'admins', '2019-03-19 04:06:09', '2019-03-19 04:06:09'),
+('6b1fb7a9bf87d75f006b34e1d349526dd24fa003607d2067c12cd9755eeeac78363ea37734190788', 'admins', '2019-03-16 03:27:42', '2019-03-16 03:27:42'),
+('6c8e3d1ffe09ab82c8d1ad7c64cb4146842529f0ed39d0e88f16f40686e87cf36d53b8949bbe77b5', 'admins', '2019-03-15 07:19:10', '2019-03-15 07:19:10'),
+('726413c5d6837c082a32261961e983a146b97dcf91b9e4bb2b18f4761a9e87378c92f7d90acc38ba', 'admins', '2019-03-18 01:07:38', '2019-03-18 01:07:38'),
+('746d67d6d8541e2497242ce88656d380dbc42f0014d527c35ff50f4bf95ae839324d546728e02a64', 'admins', '2019-03-22 07:23:27', '2019-03-22 07:23:27'),
+('7b898cfc8e549548306e54ecf84ad2c6782788cc167303d7ffbf6f9d80667f184f0979db4d1c6639', 'admins', '2019-03-18 00:50:51', '2019-03-18 00:50:51'),
+('7dbb4ace7d8971b2e487f9aad0a68bdef419aed9cb01b5fe58fac6f8ca2a8c4cc5d0628d61ca33e9', 'admins', '2019-03-16 01:41:18', '2019-03-16 01:41:18'),
+('807ab3c4e44e9b54205517d1da54ecc2622cf1a63c0003e961df0f30e89191a4cfa9788facdef109', 'admins', '2019-03-23 00:53:38', '2019-03-23 00:53:38'),
+('81b2892f063369939bdb5a65fe0d39bed6c6c8e6eb39c493fa937cf3c8df944f0fe969d5bd5118d9', 'admins', '2019-03-18 01:31:50', '2019-03-18 01:31:50'),
+('8207ae0cbe4f88c00c65c7b7936137700b14e9aa99e4a86e9feaf3ae3a6c3434de738da298de9079', 'admins', '2019-03-16 03:26:59', '2019-03-16 03:26:59'),
+('847a68304ba6a61c204056fc2df79d9f4ae6e3a64d20195f975eda55fd0218f5e9cac3eac8d7a61f', 'admins', '2019-03-16 07:07:34', '2019-03-16 07:07:34'),
+('890ae927ec314f5b3c08d6f0ea962cba5849327fb7caf438977bc2eb9490b96f832ec045db6cef6e', 'admins', '2019-03-22 07:20:02', '2019-03-22 07:20:02'),
+('897a1f202a5cb2ce18451a62e24ac38ca23919216c8b72e2577fbc32eeb28031d406d639208671a7', 'admins', '2019-03-19 01:38:41', '2019-03-19 01:38:41'),
+('897cb2b9b96370c5bbe746066769e1ad12fe299c5b97c3d432e389774e0e9078952db34fb050cbaf', 'admins', '2019-03-16 01:42:01', '2019-03-16 01:42:01'),
+('89df11cfd210d6c0ddfbff5d286a6b38be2cc7d67efb9971832a0e924c71def8647eee8b66b3239f', 'admins', '2019-03-22 06:41:33', '2019-03-22 06:41:33'),
+('8a76019e2b84afd46dd76c2cd52abec98d96d7109cd477d4538673f904aca001740945db7bbf8ece', 'admins', '2019-03-25 04:58:11', '2019-03-25 04:58:11'),
+('8c3be3e2b12f6ea63323822b7e4220931208bdfe633b7eaee7c6198b97709675a0d3b1498b40a2ff', 'admins', '2019-03-22 05:15:54', '2019-03-22 05:15:54'),
+('8d4504c3ab57497f856b7d4bdf04f68c1df4913e460e887424a1228bdbd47734178cae9395f3dfba', 'admins', '2019-03-18 00:09:32', '2019-03-18 00:09:32'),
+('926668e3f498955df138b4831e0b80368a52b69020ac4e66746cd13f90a4850f7b28dd816df56acf', 'admins', '2019-04-08 04:31:47', '2019-04-08 04:31:47'),
+('9a0d8cff8e61e194989dd2682f09ae23b5a73ab1a2382ab236d6a221595680fc24a26c9285fba1dd', 'admins', '2019-03-25 00:53:49', '2019-03-25 00:53:49'),
+('9b37101838342a0173031261deedae01ba3166ed20701d4ebe10b98cd16bf5df60d20d60b8065bd9', 'admins', '2019-03-22 04:50:03', '2019-03-22 04:50:03'),
+('9bb38dbf9a27ea3b04c3d3668b3103e4117d784af4e520f2d9e213c89ef8c85c4436286fd5f2e0f9', 'admins', '2019-03-16 08:14:13', '2019-03-16 08:14:13'),
+('9d2566701b624a89c3b1d1dd5bd78e867c4d3cb261e0b27d6ea9286eabc64dbe5adf40230fe65cc3', 'admins', '2019-04-08 04:31:47', '2019-04-08 04:31:47'),
+('a0902b54266ab54c798979d180af6e2bd29f64f250d5f5809b02fb52a977ddd5bd24a2a9c103e62f', 'admins', '2019-03-23 00:53:38', '2019-03-23 00:53:38'),
+('a2431370c48fb6c9cfad2f016e028f4b37b5ee5fd4b1a207a47cfc48820df8a13ffa95eb2dea66c8', 'admins', '2019-03-18 06:16:25', '2019-03-18 06:16:25'),
+('a4a5a7b84f28237b99cb3c8d595a4a1cdcb3de5084b89f0670e3c731fa3493ebd667b55ce9c49c72', 'admins', '2019-03-18 04:02:54', '2019-03-18 04:02:54'),
+('a4d3a223da589573b53c2ddcbc98a5dd4c9ab537d4437326bfef13ddf342309659f6439105af87b4', 'admins', '2019-03-16 08:38:00', '2019-03-16 08:38:00'),
+('a75ea1b382d77624c23ca5ac8636114d7ff0da35fa7832c1c0e34faa2267d35e9d5ae415992cbcf0', 'admins', '2019-03-15 07:20:25', '2019-03-15 07:20:25'),
+('a8ff5c4c5b0daaf46a8debd4016bca5d06fe23c54bf77c340cbeec1cc18819fefaf38c89311640be', 'admins', '2019-03-25 08:32:39', '2019-03-25 08:32:39'),
+('ab495eb1dc3cc3e30129b45a148092732639701e469fd3e1c9378bdba7f8a49695a7465c7be4c45e', 'admins', '2019-03-16 06:40:39', '2019-03-16 06:40:39'),
+('ae537adb351108db170c302fe945f7d6b31d71fb910c87f6e5228509fce4a128cb5f9d3c7ad5938d', 'admins', '2019-03-21 08:56:56', '2019-03-21 08:56:56'),
+('afbe6113d45a92d46791e2f420fdb14585338b068697a94c96b71e9be5e42be3917fbbf7081bf17a', 'admins', '2019-03-20 02:00:09', '2019-03-20 02:00:09'),
+('b0a912c9686b60a4d8a1bc5fbf39c24b5a8f084b3ffd538af9a18fc1cc6644a89e1307142b1d227d', 'admins', '2019-03-23 00:53:37', '2019-03-23 00:53:37'),
+('b336e9c17005e5e8f74ebf564be5aeac912c427c2da0d2390a8a47c84c74488a7604919dff94beeb', 'admins', '2019-03-15 06:52:41', '2019-03-15 06:52:41'),
+('b33d2f7099aeeef5e88edecba4d1ca6b94e028abf14b1268c8ea4b3bbb4df7238ad06466cd169c22', 'admins', '2019-03-22 05:20:32', '2019-03-22 05:20:32'),
+('b3bd517dd46d5a5e6107dee33ed06c316c71d2e1e5251c7fa60376771ddc16052454ab59a33a2500', 'admins', '2019-03-23 00:53:38', '2019-03-23 00:53:38'),
+('b3e947f7d62ec86293e8a2c7196a6a1d0c398d8bf36c8bd2bc3b959b3025a204e6e8ab87198b32b6', 'admins', '2019-03-16 05:04:51', '2019-03-16 05:04:51'),
+('b6b000b7d0bb0cea0a09ca824a31bcb802293398b7afc9fa0e42013278aa0ea951982718eaa81334', 'admins', '2019-03-18 07:38:18', '2019-03-18 07:38:18'),
+('b70ab445d38bf21ac4d517c793d97ba70c99732cad94cdebe24aa41fcc1784b074d825ce31cd5fe0', 'admins', '2019-03-18 07:34:07', '2019-03-18 07:34:07'),
+('b735f2fb9ec6f25269df7c10ffba099b38d668cee55239f59aaa23a2891e77923b36da8f6fbbfbd6', 'admins', '2019-03-16 03:19:10', '2019-03-16 03:19:10'),
+('b9320ba51276c2dfe3f85b026206408437d25aca25a671937a5ff3f4657ef2c9627e44ef588bfd63', 'admins', '2019-03-18 06:39:47', '2019-03-18 06:39:47'),
+('c54a90c3a7f1fc14ef56f6c218e4eb6ea17c38b20f93a0d05ec5153825b0e6fd8b43cf4e89b15d16', 'admins', '2019-03-18 02:14:36', '2019-03-18 02:14:36'),
+('c5e2689fafb8e94f2da8a62ddb4e017b0532714b319bc686b97dcd558541d8af453f67487bae2e6a', 'admins', '2019-03-19 23:32:54', '2019-03-19 23:32:54'),
+('c7524bf7aa3ac6bc5a0eb1fbba427c932294bbf1c0acea8868ea78d4eced93b4127be3531c303a8d', 'admins', '2019-03-15 07:19:36', '2019-03-15 07:19:36'),
+('c8ac616fd286f274f4567d7ebcbd198d6ae4847d1354fc232f3fe2c1710f3a639afe05421212ecd7', 'admins', '2019-03-18 07:21:17', '2019-03-18 07:21:17'),
+('c8d651594eacad8097105f5068c06ca45f8b8f1d11782ebab29f6ed649f41c7beb4c7e1f7618c90c', 'admins', '2019-03-21 23:52:25', '2019-03-21 23:52:25'),
+('c9fb8eef8f39443f3ee5cb755fd8a3507e327a07c5edc4c15ad5623e059e443f9bbca154a01873e2', 'admins', '2019-03-18 07:31:09', '2019-03-18 07:31:09'),
+('ca7e88d6d273cddb70264c4610f1b365796aa27bc454f7237f69ccd6de237c8dcfa1cea19a7ac177', 'admins', '2019-03-24 23:59:44', '2019-03-24 23:59:44'),
+('caac35eb3f22d736171b084424f7778e4388b438a97171f19b47d162f15786f93fd81fdc6c3c52d4', 'admins', '2019-03-18 00:32:47', '2019-03-18 00:32:47'),
+('cae9a86f38bf87215c91fca723d72ef42585f535767c87b1223c715c4c99cf5979ba9bd65c9e0830', 'admins', '2019-03-18 02:39:25', '2019-03-18 02:39:25'),
+('cd1cdfd3aa92e2c1430fd50b72fbab064cfffcbc674ea2493944e3e7fd9f41756c9de3f77ada1a00', 'admins', '2019-03-16 03:03:41', '2019-03-16 03:03:41'),
+('cd6850ec8a33f8c783b7776cf3022d8f11429ffe6daf94408017a14c4e7c73073220ebcc28e05874', 'admins', '2019-03-22 05:20:58', '2019-03-22 05:20:58'),
+('cf311969bf0c6ede0e20c735387230a1311f7f030bbf6294786567db87c1edbea17c5cfd69961774', 'admins', '2019-03-23 08:32:42', '2019-03-23 08:32:42'),
+('d14b7f15b77ff164bc48bfa7be0b155c872d869460796bb6be1d0cb00f21d8f8c2e2a4f0da929729', 'admins', '2019-03-18 07:28:33', '2019-03-18 07:28:33'),
+('d22daf1894047140399fb37f2234e03374ef51afe6f9b77f289dae57e4716f0116f6e18e9b286a04', 'admins', '2019-03-18 01:35:04', '2019-03-18 01:35:04'),
+('d2639ae054df14ab47e0c77a03eb171eff852312ea39b711f06b6bc7afa9c9734caeb1c1bdd0eeb0', 'admins', '2019-03-16 06:25:27', '2019-03-16 06:25:27'),
+('d2888ff6eba15958fe06890847cd87645e9a06a33ac5c967ab41d9e5c5bcbca42ab60afe9ef1b9ca', 'admins', '2019-03-16 01:58:30', '2019-03-16 01:58:30'),
+('d818d5ae60b1ed911f70d89787d7db995346adbba7acd174d146092063ef55e8c2aef808f42cdd09', 'admins', '2019-03-19 02:18:28', '2019-03-19 02:18:28'),
+('d83f871c6c69d1ae0dfd94e40774e40f4e1a8e139884a32997af5e8f9d2a3de5d1d8bc96f687b009', 'admins', '2019-03-16 03:27:27', '2019-03-16 03:27:27'),
+('e4269d523d305b69471c9d4d2d5055c3ca1ff1c1ef643ce3b6586b5a4833da1c770e44cd9154abfa', 'admins', '2019-03-16 04:35:30', '2019-03-16 04:35:30'),
+('e46d7c753152068960600278bb2f23475c5c8f40ce769a2cea06ead7c4c407c8f4e4cbd5a736c148', 'admins', '2019-03-21 09:00:04', '2019-03-21 09:00:04'),
+('e4feb4cb34170b87c0b6682bef743ddf67576c73602e2ad656c46e144fb39e3ff841bf8cc3fef4e8', 'admins', '2019-03-21 09:00:04', '2019-03-21 09:00:04'),
+('ea6c55ec17d507e847960f17df708c240c54ce037233d76528ab94fb7a38d5af818b0c3574841dfc', 'admins', '2019-03-18 07:19:31', '2019-03-18 07:19:31'),
+('eab289a5c62693368baa0fa3314b21f6cd751ac4edececb83374efdb0b12ba896fcbca31c643189e', 'admins', '2019-03-16 00:29:53', '2019-03-16 00:29:53'),
+('f177ecbe17f35f823a6d85c03165374b46ac0ec5e65d1ba79c9361c24c1fcf12ff35a0b8dbe8d7ee', 'admins', '2019-03-18 08:40:10', '2019-03-18 08:40:10'),
+('f55f401145bf6c99dbaf9ed728ed38ed035a7b971e6e637f1c671feff0b34b8b6e5968853bc8a84b', 'admins', '2019-03-23 00:53:37', '2019-03-23 00:53:37'),
+('f569884bfa538f87c9f47c5e72f57f7011a9b9914bfb41df8b23f78e5519c39149eedfe18a72c65c', 'admins', '2019-03-22 04:48:37', '2019-03-22 04:48:37'),
+('f64826de362c56c38652bd54145f13a6fabd697b91f3d257815a89c9453dc176d03c94aaf7b87351', 'admins', '2019-03-22 04:51:01', '2019-03-22 04:51:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_auth_codes`
+--
+
+DROP TABLE IF EXISTS `oauth_auth_codes`;
+CREATE TABLE IF NOT EXISTS `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `client_id` int(10) UNSIGNED NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_clients`
+--
+
+DROP TABLE IF EXISTS `oauth_clients`;
+CREATE TABLE IF NOT EXISTS `oauth_clients` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_clients_user_id_index` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_clients`
+--
+
+INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'Laravel Personal Access Client', 'KV4O3PRm9iOTZGgsdcdGjNIyBUZK7Q5XvwdHlxJd', 'http://localhost', 1, 0, 0, '2019-01-04 07:20:14', '2019-01-04 07:20:14'),
+(2, NULL, 'Laravel Password Grant Client', 'LM4KUkQdtJb73mZ0bJqNRym21IxyLdm6tNuRvbKv', 'http://localhost', 0, 1, 0, '2019-01-04 07:20:15', '2019-01-04 07:20:15'),
+(3, NULL, 'Laravel Personal Access Client', 'Ho1COP2TfiBioyfzwmHHDlqtbNYTA7i0ZbJZlieL', 'http://localhost', 1, 0, 0, '2019-03-13 08:34:16', '2019-03-13 08:34:16'),
+(4, NULL, 'Laravel Password Grant Client', 'VcNp9JjXOvg51jpCei1k92kOpGV2hgqTQNKByPxL', 'http://localhost', 0, 1, 0, '2019-03-13 08:34:16', '2019-03-13 08:34:16'),
+(5, NULL, 'Laravel Personal Access Client', 'kd5kRF985NC9P6rAAV05PJbDqYj2E8JmzCzpt0sp', 'http://localhost', 1, 0, 0, '2019-04-20 06:47:33', '2019-04-20 06:47:33'),
+(6, NULL, 'Laravel Password Grant Client', '3IpS42UOdHiAbyxOLRVLkxg1N29ng9JFg3NRiGNm', 'http://localhost', 0, 1, 0, '2019-04-20 06:47:33', '2019-04-20 06:47:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_personal_access_clients`
+--
+
+DROP TABLE IF EXISTS `oauth_personal_access_clients`;
+CREATE TABLE IF NOT EXISTS `oauth_personal_access_clients` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `client_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_personal_access_clients_client_id_index` (`client_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_personal_access_clients`
+--
+
+INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
+(1, 1, '2019-01-04 07:20:14', '2019-01-04 07:20:14'),
+(2, 3, '2019-03-13 08:34:16', '2019-03-13 08:34:16'),
+(3, 5, '2019-04-20 06:47:33', '2019-04-20 06:47:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_refresh_tokens`
+--
+
+DROP TABLE IF EXISTS `oauth_refresh_tokens`;
+CREATE TABLE IF NOT EXISTS `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_refresh_tokens`
+--
+
+INSERT INTO `oauth_refresh_tokens` (`id`, `access_token_id`, `revoked`, `expires_at`) VALUES
+('005ccece344c0b72481d11051b6b76e47f903e8f5929931e4435d1808371d23e1f7cbc1427c35b0c', '041fdeab5959d0067010379c998c1476cf6cfc9755d167e38a5f686994dcfb56c2453b83adf97ba8', 0, '2020-03-22 14:10:32'),
+('0354b01287ccc90d4dd468986ddf483516c040f91f68a077ae194aae9ef82dd57970423fff0810cf', '0b4dc32f3ffac7bba0878a119b7e99fdce674984f490fde6d602b37905a77baacb56dc6d3a80146a', 0, '2020-03-23 10:04:58'),
+('0587762d3569c316811cab16157710af9f48f40cafe478c1ef6cf56283c9ade0b25dc455451243e3', 'd22daf1894047140399fb37f2234e03374ef51afe6f9b77f289dae57e4716f0116f6e18e9b286a04', 0, '2020-03-18 07:05:04'),
+('06930b45ade33317d875330a3c9315ea37a28119c20b01c846c80d34e20c96eee524be7b59b89701', '3dc6d7af06a628bccf5d8c325331abd9890d522a98f0bdbf2bf14ae07dabae7ad4160482e607fc4a', 0, '2020-03-19 07:55:50'),
+('06e806d66efc84a91f1e85b9c124f2aa784df76e0340ed97f10e06c02d1f6f1c24110c6e52518d42', '47afce3d521158de92ccf1f0939452a519049af52d4aa0dc5348a2647a320a0540bda1f27e20f10b', 0, '2020-03-25 14:02:41'),
+('090ec6939e45a8c41d5747195faa4211650cca093465e5ef4a975ab038887998bcedb89cf9cc8073', 'b3e947f7d62ec86293e8a2c7196a6a1d0c398d8bf36c8bd2bc3b959b3025a204e6e8ab87198b32b6', 0, '2020-03-16 10:34:51'),
+('0b4a04a17934fe9f136ed38f52884e76a25186fce3f44f8846da54019451b3ad3b9a2c9475542999', '8a76019e2b84afd46dd76c2cd52abec98d96d7109cd477d4538673f904aca001740945db7bbf8ece', 0, '2020-03-25 10:28:11'),
+('0b713df8ebf4d7dc16f241e09731fd9a4c957a42380bfb9af50195a2d74521782da8ef93b7fdc454', '103c3af6565c4a753a67141fb6906c20ba1668fc96c3b86b3f53b36f233d45c85b209c2be1896a9e', 0, '2020-03-19 11:55:17'),
+('0c0b49159d8542d14a6b8bc1b40a7843a980429eb123fbc7fb26be793e31a01bda3cd88e5f1df45b', '1a32e93dcbef5005b372667f845e9d314fd13250dcf3de2a82c5babe47b1b913ddfa43c0e800aacd', 0, '2020-03-20 12:08:05'),
+('0c646abdb4e24c80bc8f54cdedb8dd3edbcefd4b401185bbecc4b8775abb58318a4db1370be22c37', '6d523e36472a0eacaa433045e866cb3539cd8d89e4f8917ee2512380d127a2cdd703a00a3bffd739', 0, '2020-03-15 10:17:27'),
+('0d48b2775bc48a34f998db6622dfafe9890dfe54b84729319118063eeff28aafd26f390773d95ac0', '8207ae0cbe4f88c00c65c7b7936137700b14e9aa99e4a86e9feaf3ae3a6c3434de738da298de9079', 0, '2020-03-16 08:56:59'),
+('0e3035d6db60862703b5f529a55728350f0dbff675accf9af2a006d3c3f4bf1ec93c885793dc975d', '897cb2b9b96370c5bbe746066769e1ad12fe299c5b97c3d432e389774e0e9078952db34fb050cbaf', 0, '2020-03-16 07:12:02'),
+('0e864c9592e9deb650c83d30814fdde1300c5b41fad0c9407cbac10c5afa472168c32fd0ac75d13d', 'c54a90c3a7f1fc14ef56f6c218e4eb6ea17c38b20f93a0d05ec5153825b0e6fd8b43cf4e89b15d16', 0, '2020-03-18 07:44:36'),
+('0fcd1dbd6f292ffa82c0efbff94234d26788a1de040e9e1e0cbf497e8f27c093a6a868195b3a41d7', '5f2b82eac2558f19bd5144357a18728aa016a31188701d6c1a1f7f47e037ffc8a06b29bad1adb40f', 0, '2020-03-18 12:43:26'),
+('1012f09c66c4ba1ff84e7385407f915fe4b46744e686aa936b10c6b0a26091373f5c792322376374', 'a4a5a7b84f28237b99cb3c8d595a4a1cdcb3de5084b89f0670e3c731fa3493ebd667b55ce9c49c72', 0, '2020-03-18 09:32:55'),
+('115eaf1200d7f938543944088fe3ef82448498fccdb96fec52fdee02f01d6377f40d4d40c8d01100', '746d67d6d8541e2497242ce88656d380dbc42f0014d527c35ff50f4bf95ae839324d546728e02a64', 0, '2020-03-22 12:53:27'),
+('12030065a47e4b911ea9087e927a500de01768aff86b7431c2bd6833e3f2077e80faad95974db289', 'f64826de362c56c38652bd54145f13a6fabd697b91f3d257815a89c9453dc176d03c94aaf7b87351', 0, '2020-03-22 10:21:01'),
+('1554e1595840c013e177a45f8b169c2ec5ae82d0142a6f2b72e63d6251ebb46cf182d08f8ed83cfb', 'caac35eb3f22d736171b084424f7778e4388b438a97171f19b47d162f15786f93fd81fdc6c3c52d4', 0, '2020-03-18 06:02:47'),
+('1710e82eae760a7442968515d12e63c54927586d0e1a91f33d3addb8dcb7ce26e8066405cf61df3a', '5f6ef8400ed6db6571649380d742d99a715cd97a0f6e5f2e1e3828b5d9e218b09c4d0dbd5614e84d', 0, '2020-03-23 06:23:37'),
+('1e0982f4bc3d14022df227ba56f927b18a9a56f1aefd21ef914947385b4756f9ed6b38421107f6e8', 'cd6850ec8a33f8c783b7776cf3022d8f11429ffe6daf94408017a14c4e7c73073220ebcc28e05874', 0, '2020-03-22 10:50:58'),
+('1f0932dae0d0b05b85dc247e368159d638afecd4c20b3b16eb8c0b0138fc424480c28ee13637b7f8', 'f569884bfa538f87c9f47c5e72f57f7011a9b9914bfb41df8b23f78e5519c39149eedfe18a72c65c', 0, '2020-03-22 10:18:37'),
+('25a46fc1476f8e9cbd0105b66770f396d9bcaca36ca4e10120a71ff10cebc301fe7bdcba7cd2ac46', 'ca7e88d6d273cddb70264c4610f1b365796aa27bc454f7237f69ccd6de237c8dcfa1cea19a7ac177', 0, '2020-03-25 05:29:44'),
+('2787da5ca701515fe2800a89f1466ce511f4541f50b9f39e586d792f7ca7cd75645622ad157e4641', '50e2043dd75d61750d29512e7576cd3f4324f16d2228519e3d2feaa1b6879f75a4453f620736a079', 0, '2020-03-16 10:46:09'),
+('27e80b61d6b9cfdda2b3063f44e37622ebd53933542ab4ffe42c7889818cdb9e91e265708d7699ae', '42fc523faf7cf45f981ccfd6af53d149d2038bf4afae25dd885cfc3e1693f5d09836de03aec9dca4', 0, '2020-03-22 11:02:17'),
+('281f5013e3f32b3f07107dadc31b5ec48126482df32c95d76444e924e9c92d1f931f9000dd4e62a3', '539aa25e2ef50f86f93d7eddffe666b782292a80d497a26c569f52cd57e378bef505b120b68bbc9e', 0, '2020-03-20 07:33:57'),
+('2993a432a74eb9c4c632173d317e0afb31173f73e153505955101c609f623a5135a40b4a1160fa4f', '5743320e552ba2c5387f6dbb29dd14b825860b9063d95f54adbeb1e5a4c4ba80c42b7a4f5facd853', 0, '2020-03-15 10:03:27'),
+('29f242370d5a4522c65ac8cc2ace6f708f98482b3dbe1b2888f181b44405603fdbee3b549ff647fd', '18f5ebe8c36b680a18134790374c0aece72f38472aa9e0f07b2a6ae9ffaf36e1a42eb31a8762e9fc', 0, '2020-03-16 08:55:35'),
+('2ad886582e79f167161f1a5c7d1485ece50feea7a292a379f21f699a0d281878f42e7fc5bdb8add5', 'a75ea1b382d77624c23ca5ac8636114d7ff0da35fa7832c1c0e34faa2267d35e9d5ae415992cbcf0', 0, '2020-03-15 12:50:25'),
+('2d6bb2c882067e4fffcff8a230898f4fb68e770ad15307f091b7b0ea8cfd8c4a9294a97aeea24548', 'bfbcf2de1833ed217667cc3b567046ab16c31c0e76a31ba98b9629e0b17b1ff29252cf1bf45352a3', 1, '2020-01-05 04:41:29'),
+('31064e6bcb3091199e12db9c969c233781b9c847284ccaa27e96305e870b300694091a7a4143a0ac', '0c474168c8bbacd29827f5785371068d4c4a3ee5bf36efea696c4204950f572feb3a8bf3e531796f', 0, '2020-03-16 13:55:56'),
+('31d7dc3adcd5deca29bc33aa805695caa9fa78f3b21d2974f9a99326d9298b72bef83a1a9d9bc607', '847a68304ba6a61c204056fc2df79d9f4ae6e3a64d20195f975eda55fd0218f5e9cac3eac8d7a61f', 0, '2020-03-16 12:37:34'),
+('3595a29f67b5b3f7ae86cd5773abe8b88f67d390ad2a2c871546105b10baa0ce9c1160d4ea2918d0', 'cd1cdfd3aa92e2c1430fd50b72fbab064cfffcbc674ea2493944e3e7fd9f41756c9de3f77ada1a00', 0, '2020-03-16 08:33:41'),
+('3738f090e6b11090813e3d611b6fc6804747fdb7c03d169adfcd3ba44674c1aac4741c2239664072', '30debe8307fc0181b86980fe9dbb02a6d49daaee2433cf246359c125d0133347ec717ab76d8558ed', 0, '2020-01-05 06:08:29'),
+('37a592ef7230b31bae9ed1c98706201237872ba6584df2e6dcf8e2efff43ffe00f037fae59410cf2', '0600049e393377341b318b6dff1b33695f02f36d382eca4bef05e032fb22efb073a0ea4dadc28380', 0, '2020-03-18 13:07:49'),
+('37e29a8939337bba2416876d710050d6dae41f850253550dd2e98dc6b87144b22c19315ec7265a8d', '338ec88ce9aee9000c28a801eaa2cf42ac375e9ec53797ab4f9c4753848e85055e9156aba6b10359', 0, '2020-01-05 07:03:00'),
+('3a431c8a379c909e9d0b8d3fcacb27e888ea25fbf744449b24bd1b0a0ff8623eb18e60bc5e79275b', '890ae927ec314f5b3c08d6f0ea962cba5849327fb7caf438977bc2eb9490b96f832ec045db6cef6e', 0, '2020-03-22 12:50:03'),
+('3a5fcbfa9cd745c85ff7863bca5ec21d4832b2110c915a9790d80443fcd4f427e0be24b28580a26e', '159f32ab8b9de03bd15c22558edc6642a581478243422e5615a79c1d70f26d555d9a42f3ff7b26f6', 0, '2020-03-16 06:40:42'),
+('3c2acaf611174bb2897465bfea9506535a46525d3689cf33559a503ffb662150a2c6d10fe98384ba', '043fcc7d42463674502d7f8ad03e1b44790086616fa74fccb942a73ccbc0fa479db3e6dec3aebe19', 0, '2020-03-18 14:03:42'),
+('3c2bf8d272f29b3a22530e03a3551ea641520b540b6d8c79b180c104d29248590817dee3f037e4ae', '404ef070985ee0638fc3f68a918851f054ffae1be6822afef26f9683105a75ba91caa4d30ba89776', 0, '2020-03-16 07:24:30'),
+('3d24ff3f38f0f81ab5a13c6afebf293901a7bfb286824f5d1539340ca40a5f7e064726236146876b', '3519ed560d12f9616ddda5d680855229c207551c5d5c198ba5e4fae34d24b9875950538a9c5a14b2', 0, '2020-03-23 05:57:58'),
+('3f398ae92047b2b49a661ce3c105415472ba3c34f9d2363903da7a066d3f4e62dcea995211782a5e', '2871c994821846dd6e0c2839d429c25885c7cbbe6bbf6b2c7fffac7cdb5a3bf388c725bac49152ec', 0, '2020-03-22 05:19:37'),
+('430c3d4bd0ea56ffa193dbd9c1920c6d1b57542c8e3f426ff3f3f59ac329b463db74ffca19c7f42e', 'ab495eb1dc3cc3e30129b45a148092732639701e469fd3e1c9378bdba7f8a49695a7465c7be4c45e', 0, '2020-03-16 12:10:39'),
+('455b9ae5d32f19a151475346a9d796d48b0463f24ea90dc6c09ac13ddc8771c1794abe62337fecc1', '6b1fb7a9bf87d75f006b34e1d349526dd24fa003607d2067c12cd9755eeeac78363ea37734190788', 0, '2020-03-16 08:57:42'),
+('465d97e8ca582e02572f19f5a7927ca270359e2c7dfe4ae71c5675c69e5b9194b61c9b7864ae75f0', '8c3be3e2b12f6ea63323822b7e4220931208bdfe633b7eaee7c6198b97709675a0d3b1498b40a2ff', 0, '2020-03-22 10:45:54'),
+('46c8553370d46e09f580c04a508698fd6dca17d64c2b98a4a70e87d20479e503c8f854edcb784888', 'eab289a5c62693368baa0fa3314b21f6cd751ac4edececb83374efdb0b12ba896fcbca31c643189e', 0, '2020-03-16 05:59:53'),
+('476a29306d1c526a5e482a424c56afecd49cd15f031720926585418b9aad909f1df706434e6eb373', 'b0a912c9686b60a4d8a1bc5fbf39c24b5a8f084b3ffd538af9a18fc1cc6644a89e1307142b1d227d', 0, '2020-03-23 06:23:37'),
+('496bbc54bf752f01e61efd323dab47e0ab76833eb092d60856ee4e2254c9ae6f7acb36377f42bded', 'c9fb8eef8f39443f3ee5cb755fd8a3507e327a07c5edc4c15ad5623e059e443f9bbca154a01873e2', 0, '2020-03-18 13:01:09'),
+('4df4247ecf4c670ad974c1b4bb3282f7d95aa4c153a7ded6f00051f6ffe80d13e6dd68ea5a2119bf', 'b3bd517dd46d5a5e6107dee33ed06c316c71d2e1e5251c7fa60376771ddc16052454ab59a33a2500', 0, '2020-03-23 06:23:38'),
+('4df44473b52688fe331fd7bae1e137f8e3dbce430e4a4642d31a8daaa4e014e325448abd761c0b32', 'f177ecbe17f35f823a6d85c03165374b46ac0ec5e65d1ba79c9361c24c1fcf12ff35a0b8dbe8d7ee', 0, '2020-03-18 14:10:10'),
+('4ecadfdba36f205388c1a2dd7a4bafc26989584555e728beeedb90dea7c136ce1f509aaff35b7033', '3e9c166fc9ae600d70e3552e036a60e5a03f54504d6b78df8fcee7c2f63325c13aafaf16a84d3a14', 0, '2020-03-16 12:12:42'),
+('58eb4f9c71cc8d1669339147b35dca1e2dcce9a090e511dbbee4c3e33885b9978109f2f0912a834b', 'b6b000b7d0bb0cea0a09ca824a31bcb802293398b7afc9fa0e42013278aa0ea951982718eaa81334', 0, '2020-03-18 13:08:18'),
+('5c042025f203becc270d3ea50c71f7b86fa8cb8d0b8d884eee39b4204d020fed490d33b33c8182c9', 'e46d7c753152068960600278bb2f23475c5c8f40ce769a2cea06ead7c4c407c8f4e4cbd5a736c148', 0, '2020-03-21 14:30:04'),
+('6110db07246fa23ee65327289d95ab7b8302f08d2aaefc0ebf6c6ddb9f5386079b23103b8bf38300', 'd931674c5363e0811cca1d646fc6f28f04d6559f68fa08d5986771ca85bc681b1947021aa2a631bb', 0, '2020-03-14 14:22:14'),
+('61e91dfeff1b9fc252ea53c47a1fa275fb0f9b4da5c03a92f9fe56578191e9985a6e5d0d9da8536e', 'b735f2fb9ec6f25269df7c10ffba099b38d668cee55239f59aaa23a2891e77923b36da8f6fbbfbd6', 0, '2020-03-16 08:49:10'),
+('6b81c44b8d58f130ef4dbbae46103400a1ae86b9b2f6ab2742cfbb880e1cff12d4d78fa2735997bd', 'c8d651594eacad8097105f5068c06ca45f8b8f1d11782ebab29f6ed649f41c7beb4c7e1f7618c90c', 0, '2020-03-22 05:22:25'),
+('6bd0d1e4098e99d5907592a276140dd34595e3e2bbc3e6234822ef26a00d1d20fbb8ca9f0cf444d9', '66e6a1bc04aaddbf303476c55bda2569a06e60f854e9abf8b5fe08ed45309573bf98325c6546db1f', 0, '2020-03-25 10:28:09'),
+('6dbf12559003f5da469e9d870c753d1e0f607b885ce374bce3b44870943952f6bc24caf7ee540432', '429b9faa205bf2ed1ab41df755a1bc526950c70876599fc363227089b9ae8cb22db505033c4e0556', 0, '2020-03-16 08:57:35'),
+('6f58fab8f9ca86ca2a86e0a99eb0f8a09dc8aaf6ebacca7c1e25615eff2ef60755cdada82a9cfc1f', 'b336e9c17005e5e8f74ebf564be5aeac912c427c2da0d2390a8a47c84c74488a7604919dff94beeb', 0, '2020-03-15 12:22:41'),
+('6fcd989f8bda2c33c09b12d4e86ecae92c763ebe78087d90f1ec2379312aadf039c68d9d32d3b525', '271096855c94ff0877d77fae95b9bb29b7d7cfc6f702acac93c6a25f0e87961a14708544babcb87e', 0, '2020-03-16 11:45:02'),
+('71110f31c9c27dde2fc18ece472ff6a8358931dd1315bb40f890ded6514700cd2c128f5450b0f05d', '60fce2893148b36d3a3d2bb8ad2cca53f7d54c98ee37bfefa855811f6b65d539255803e94f5af88e', 0, '2020-03-16 06:39:55'),
+('746159f5fdd85b212236a56d28a126e79cb0f3311c53f24fdc1cda68747c010af198a4033f2c0e2b', 'a0902b54266ab54c798979d180af6e2bd29f64f250d5f5809b02fb52a977ddd5bd24a2a9c103e62f', 0, '2020-03-23 06:23:38'),
+('7848ef5eae85f1c2152930bd71d5790ce328ba8dc45e3a40296ae809d5d84d54fd00faa8ec579cba', '3eac1a60b671ff3664580e9d059e4a25e22874dd8f8ae1e412b443b5657df159ba002173ec947feb', 0, '2020-03-18 08:20:28'),
+('7933f71030802eb0cb2decc41612a09e4d04f4bb258d272f46a0a75bd9226dfdc9dc12d836141138', '89df11cfd210d6c0ddfbff5d286a6b38be2cc7d67efb9971832a0e924c71def8647eee8b66b3239f', 0, '2020-03-22 12:11:33'),
+('7e2eabe01ffa4aa5ce63ffb5b1185839736c3c8ec539bac5a1d2756571843234b185386eb80e8204', 'c5e2689fafb8e94f2da8a62ddb4e017b0532714b319bc686b97dcd558541d8af453f67487bae2e6a', 0, '2020-03-20 05:02:54'),
+('83dada83b75fd1bdac6ce15be0de66f6c30806e66add3be2040a87bd56b3bf7a5fdf71e440b5ac9e', '0095c6c4333556bf1457cbeb3d10bfd2c554c8358478b65802237bdd091980ce204e6d552f52af10', 0, '2020-03-16 13:24:26'),
+('8fb36baa959407196c59b409f1f8a116e85a3721e817e57451b6b489a1f47631223b46485766f671', '2cc8ff9320faae4f13e28f079460254961fafd63f57bd3211f65c5c064d02023bd5b3f65f6f05e7b', 0, '2020-03-22 05:22:27'),
+('913fa0fa55118f34666bf601b08b2b1ef29f918d08b2b4eeca76ae2a606006a386e58d3f45d24b42', '7b898cfc8e549548306e54ecf84ad2c6782788cc167303d7ffbf6f9d80667f184f0979db4d1c6639', 0, '2020-03-18 06:20:51'),
+('92ff14a4b2ac108f4564567319a63b09f3d5e016b567b695919b2703e510f1780b52e32cce15d76c', '538b59f9a5c0de2c903727d09999be46cf645216481a435507b3285373d76b4bab8619be83aff2d4', 0, '2020-03-25 05:29:40'),
+('93bcf098d4a5bc4e38838f641240447ed19c795ac80ba35588ff12d42d482e43610a8c3fa77b448c', '9d2566701b624a89c3b1d1dd5bd78e867c4d3cb261e0b27d6ea9286eabc64dbe5adf40230fe65cc3', 0, '2020-04-08 10:01:47'),
+('96ec9f4494bd0feff40bf628f9e4bd9acd1a12cc775eb22bc0b2487861b8bce6f4d8022745c830ee', 'a8ff5c4c5b0daaf46a8debd4016bca5d06fe23c54bf77c340cbeec1cc18819fefaf38c89311640be', 0, '2020-03-25 14:02:39'),
+('9b490ad2548ca9a59469f32d21c63cf93e773da37dbb58394ba66bfe4b3fd3484726087267c8cb35', 'a2431370c48fb6c9cfad2f016e028f4b37b5ee5fd4b1a207a47cfc48820df8a13ffa95eb2dea66c8', 0, '2020-03-18 11:46:25'),
+('9cc4924f37808306553005903a4920fb2208e91a919637c90dc4ae31b176071beeb8df430fe51b7b', '807ab3c4e44e9b54205517d1da54ecc2622cf1a63c0003e961df0f30e89191a4cfa9788facdef109', 0, '2020-03-23 06:23:38'),
+('9cc5a63163dfdb4113d547dc9945429292894b3e0b6b058dde0f662ba25a4dbc6fca7c5a49c53a15', 'd2639ae054df14ab47e0c77a03eb171eff852312ea39b711f06b6bc7afa9c9734caeb1c1bdd0eeb0', 0, '2020-03-16 11:55:27'),
+('9d4aa4cb15e73b7904571270246d37fffdf0e79ae6432c6b7422ed8be6436e7569b32231738be8d7', '726413c5d6837c082a32261961e983a146b97dcf91b9e4bb2b18f4761a9e87378c92f7d90acc38ba', 0, '2020-03-18 06:37:38'),
+('9f27323daf5155a66c551f3d07827cec17d902925eb7e78b8ad3f0399b4bf1daa49bbaea4bd3d69e', '81b2892f063369939bdb5a65fe0d39bed6c6c8e6eb39c493fa937cf3c8df944f0fe969d5bd5118d9', 0, '2020-03-18 07:01:50'),
+('9f45d2a0511035f42cb0b10f2304f09fd6b69e0fd278ca2f704dfb5f463857e68c5a4c00006142e0', '82f242a39ebbd7ddbe52c814fce31595cf3d594fd9b4548168d03efd4605cd5ba2d9fa9585d6f9b7', 0, '2020-01-05 04:46:42'),
+('a13797dc99ac9316cd5a625b5c87afe201ed761b42b0c2be246b4e50dc15a9120d1116def833b709', '459468ef8ea23e65d9ec4f54118bc2e655bca477381b9415dc62bf853c6d4d8c6e0a95a367e8d580', 0, '2020-03-14 05:44:17'),
+('a36c606bbf515133819dbcfe347d0c4c1d712c821d1a3af9c2c42655f1a6b9998c42115bc502db38', '11ca459a323a646a3246170c810ad623eecc2ef646be6e61e63c49b6e57fa07d3b6ab1b4db7407df', 0, '2020-03-18 09:26:31'),
+('a510bb97b1127a57e69207ae417691b5e6a343309ed8e291bc4d6d6bf6dae3305dfe4e379aea12ee', '43a825e6c5bee7025de027e1614d293b8b2a88423bd620009939836fc5c424e0b362dd55fd6eeaa1', 0, '2020-03-16 10:33:20'),
+('a5306278eba7989edc0f7e04bc0dff0c95967621d4a5e04f13ccf38d4c38d26cb494120789997278', '1486e843bf481419341201c40b1439e2afa02af9289cf2b90331c104507baae33d90c3e133c1de53', 0, '2020-03-14 14:03:18'),
+('b1aed5109b2f583b76bc99a7d1d70cd78dd86ba96fd7d7945d6e38cf1eddeafc2e2335878411b7d4', 'cae9a86f38bf87215c91fca723d72ef42585f535767c87b1223c715c4c99cf5979ba9bd65c9e0830', 0, '2020-03-18 08:09:25'),
+('b344a7269b2abda4e66940826b8e4f1246ce284c6d5c72fd612a1bc31483ce56153b15ff3047889a', 'afbe6113d45a92d46791e2f420fdb14585338b068697a94c96b71e9be5e42be3917fbbf7081bf17a', 0, '2020-03-20 07:30:09'),
+('b3dd0d0acba48f3f24c5c9e653594f94113c09711c009cd5a3069ea8deca5b805614d3dea3caa4c4', 'a4d3a223da589573b53c2ddcbc98a5dd4c9ab537d4437326bfef13ddf342309659f6439105af87b4', 0, '2020-03-16 14:08:00'),
+('b42ad696d592f605d593d930798950949059269cd925a8060dd6e1699d35ff38b14b5e3860f23dd1', '5d27775f1f44bc1d3454fcd166e2e9d848b2c2ee0cb8e12ea889f3ab42db31bbdb0cec8241423fe8', 0, '2020-03-15 12:49:23'),
+('b8c284845b4666d96f6983eefc43ec03ebf15d0856a9c828355780e3907ad5e2e0be5f715c6c7740', 'd818d5ae60b1ed911f70d89787d7db995346adbba7acd174d146092063ef55e8c2aef808f42cdd09', 0, '2020-03-19 07:48:28'),
+('ba1eac36686f24274bba24e8309076fd0898df1072326ec56f075b194556b7ad9a3c7eae87d04f36', '13e3b14c4f997505e60d830c4d4bc9daf0f82d6a9c5eac9c2a5ece0e9d675acc1983bc6caee0b72d', 0, '2020-03-16 10:50:27'),
+('bb22f10e1f54b1badf58a7b5a72f94099cf6412be95f3fa1d86b37ec9c83d50bd2afe4ad209172bb', 'ea6c55ec17d507e847960f17df708c240c54ce037233d76528ab94fb7a38d5af818b0c3574841dfc', 0, '2020-03-18 12:49:31'),
+('bdc687a3b71f03dbccb68805ffdc0927b233e7c9a681a80f30f482c55a3fd1605469dc14935f6976', 'd14b7f15b77ff164bc48bfa7be0b155c872d869460796bb6be1d0cb00f21d8f8c2e2a4f0da929729', 0, '2020-03-18 12:58:34'),
+('c4b45247b7ff581b2cea453f5865114e1f0c0c604766cc4624eebc2c7a1583a36ef9609494e08793', '51465241e05b4228f7b54a19d1f9e5e1247c41a099ee91a53519effb4f7fa7dcf70a1165ceeb4ca0', 0, '2020-03-18 10:25:23'),
+('c703cbcd76f5e256cce8f74b4b9f9097224fa3d4cbf4559e0319030df985b26064f001a22c624105', '9a0d8cff8e61e194989dd2682f09ae23b5a73ab1a2382ab236d6a221595680fc24a26c9285fba1dd', 0, '2020-03-25 06:23:49'),
+('c896ca9e2bd87ad50d4ed1f9ddcdff696bc0a77898f6695c3f2af273d6156271a246540611b2e718', '241f440f9ccefb00b54262a6cac7ddabfd0ad08c4f0ecf803463e07930d3861ae626dceb03ad7bd5', 0, '2020-03-19 12:01:09'),
+('c97abceb2af017fb2e0cafd12aa09a4208f9d6bfa91d3ce78e6077d523bedbd2189f7a7fec6da7f8', '897a1f202a5cb2ce18451a62e24ac38ca23919216c8b72e2577fbc32eeb28031d406d639208671a7', 0, '2020-03-19 07:08:41'),
+('c9b064fed812da7a23b08f1b1811dc034faef6224b7e3002494c32a7c57cb83ebe6f2c247d73aaa8', 'c7524bf7aa3ac6bc5a0eb1fbba427c932294bbf1c0acea8868ea78d4eced93b4127be3531c303a8d', 0, '2020-03-15 12:49:36'),
+('ccf51b4253d1b9541438827f63c61bf9aed061b31407591911636a082a0e50c12d9b9649285ca425', '7dbb4ace7d8971b2e487f9aad0a68bdef419aed9cb01b5fe58fac6f8ca2a8c4cc5d0628d61ca33e9', 0, '2020-03-16 07:11:18'),
+('cd43ffa0e04c45d0de2ed78d1bd804f74096eaf5107fb66abe169c82a7cd6a3c4a6aff1c2569dae4', 'd83f871c6c69d1ae0dfd94e40774e40f4e1a8e139884a32997af5e8f9d2a3de5d1d8bc96f687b009', 0, '2020-03-16 08:57:27'),
+('cd6c064640cfb471b585eb759723cf35fd4c8685ce13ecbc9e6f59ca828d1e790b6db2b392cb7527', 'e4269d523d305b69471c9d4d2d5055c3ca1ff1c1ef643ce3b6586b5a4833da1c770e44cd9154abfa', 0, '2020-03-16 10:05:30'),
+('d0885c809fb216542cf7480237e991f9af500f6f3564ee118df869b9404f389790800c8e9b54b049', 'f55f401145bf6c99dbaf9ed728ed38ed035a7b971e6e637f1c671feff0b34b8b6e5968853bc8a84b', 0, '2020-03-23 06:23:37'),
+('d11fc724ebb1c4b6688f199fdfc30f9b3ec6669a06888ec244608cf3f2cf5fdf1b82f8b28a9edc79', '9bb38dbf9a27ea3b04c3d3668b3103e4117d784af4e520f2d9e213c89ef8c85c4436286fd5f2e0f9', 0, '2020-03-16 13:44:13'),
+('d1f2ebd767f3dc88d65e78a38ec044acd10d62282bdbf463b1b45f2fcfe4c1d7ce59edbd9cb1ffbd', '5f455f564a8ccdd4eeb1eea4fa767879ecd9982d5daaf2c5a6c2bcf50972275167f05a0b612e1686', 0, '2020-03-16 07:40:51'),
+('d2982f513e4d34e64cec4c5517edc7d84a1cd5e91a7502f92c6ebd44c70f4755ecd92af401a01aa5', '6c8e3d1ffe09ab82c8d1ad7c64cb4146842529f0ed39d0e88f16f40686e87cf36d53b8949bbe77b5', 0, '2020-03-15 12:49:10'),
+('d377918f62bef81b53fb7de8ed2e3fbb78a8f5fa4f95fb6c9d529f3044af9c55bf1030d2d69a9a3b', 'b33d2f7099aeeef5e88edecba4d1ca6b94e028abf14b1268c8ea4b3bbb4df7238ad06466cd169c22', 0, '2020-03-22 10:50:33'),
+('d3eea33f1e89fcb3d288ec4a7f62d9c92a0e3b5bd5b01ec724c557a3dcd5b9ea9643e84b4c36e985', '6120cacf23f1a4f4d6627a00401c28d75fac295107126921939500f04e9524cd402d8f771e476fbe', 0, '2020-03-18 10:31:56'),
+('d49c85f983776a79af3f0cd32525a4e1962a6ded58712278ea23855a8c7c9f9a1469ac86ca495484', '99596305e79728ea1132a457803c0e14ae2fda2d20cc0506a1caf9f9ea75d9dfc2d27721b1b2900a', 0, '2020-03-15 07:32:28'),
+('d7bbdf87fc8a32def6ad483cdb0feda5b7ef8589a3fa77aa518a4b16b371bc6866285197c6e6073d', '4ef8c27fb3f542c6dfb791f6834dc4b16a5569cf39c629a680ff4158c9342f4d36ef1d4c5b9877e0', 0, '2020-03-18 06:00:20'),
+('d902fb9f56fcf2dbe2616048e62f7d6c10af30cb64f24de27fd86eff16d696e755baf766dbec9c13', '070924011d44a25f87239f3e979044720b88da1ab3b23d33ad078357a4f6e4fa868b563c771573d6', 0, '2020-03-20 07:22:31'),
+('d9746d289ef57fbb535ea5518b58c19c13b24df2c10ff7d6ceabc278c2cb912bf7cf051b8eee4a88', 'cf311969bf0c6ede0e20c735387230a1311f7f030bbf6294786567db87c1edbea17c5cfd69961774', 0, '2020-03-23 14:02:42'),
+('dc7d84c0a4f95c9a3e539bf593c846c410407c62ed61fcbcdf31206a39f2640cbcdb52f9dc18a12f', '43c823b4cce97184426013c715e2db831e190ec1750cfec1813c99b665e492dbb2b79d843a6427a1', 0, '2020-03-19 08:00:34'),
+('df442e69b80b46aa8ccb5efa739be48b96a75ba71fc77025c1e7928552bfefb01ff7af0548e13aa3', '568cb0aa197a7df68f351eedf976342287cfe5d5db32d44e9ab3d84ecfc9330e202947fc44a3250d', 0, '2020-03-16 11:02:55'),
+('e2ea3a37b75a9bfbff2ac27ef9c5eba80a36e2d9be8baab7d3732ed26bf595e353303b23e0de992a', '3b0b22404be69b3833062523e7ac719a4fe47c627526bbcc5b66b905472c38a84ddbb4a703bd1842', 0, '2020-03-15 10:03:49'),
+('e43f17cfe7bc78c53f7e04721881245f87ac69cacae02fe8a13839f3d11ac8c24787d7dd3c969d02', '2468df6a729c1493d3eef636a4ffc19f62b195848dea13457029eade414482825d81135cf945dbc2', 0, '2020-03-16 07:30:00'),
+('eb868cc0f2e9865820a130503a40a59a48e65f1ad368a6187e7c8ec38e307dfccad209e14feb6643', '4bb57d31a4f6a212f667e120f93dd69660fe7119ec5e0874eb23501adbeee26d21ad7116b94fec14', 0, '2020-03-20 07:16:52'),
+('eb946642fc3ce99622624734fea21c5d1557614692b9d5d054b43d96bb71653c7f7b4c57930ff931', 'b9320ba51276c2dfe3f85b026206408437d25aca25a671937a5ff3f4657ef2c9627e44ef588bfd63', 0, '2020-03-18 12:09:47'),
+('ec99f9549a1dd7159f8d6343f4bf4b91c947199d97334880929ab64bafd1b3725732d75a33ea5472', '3f9ad5638a619f0080b9c44d0d4b2f7ddeda6d08353f7e2567840fcce273157eae96a2af4c769344', 0, '2020-03-18 06:59:50'),
+('ede1e623d356677578f69a4a64afb97f752c37d8685b6a96443a24d0b370631196cabc01d0fdd5b7', 'c8ac616fd286f274f4567d7ebcbd198d6ae4847d1354fc232f3fe2c1710f3a639afe05421212ecd7', 0, '2020-03-18 12:51:17'),
+('eec4a73a5c64f21a45064696f917c93da8f0d5cabab2d016c4b0b90255ca883fca846c23b070b428', '8d4504c3ab57497f856b7d4bdf04f68c1df4913e460e887424a1228bdbd47734178cae9395f3dfba', 0, '2020-03-18 05:39:32'),
+('ef79044f82cdafd94dab74db2e8ebb0edf8d56fd95b8dca4cfd32a7b4f4b4c5608513494863b58fc', '00bfe932c526ef34c87fc3a110b535d1515140afb80d7776fcf1846d494e8116aec693cbe91b7849', 0, '2020-03-16 10:40:31'),
+('f194d2c9eeb2f170147f2b41f24ac8197244161cffb4e57d877bdab46b04842b84347bc6afc09df7', 'd2888ff6eba15958fe06890847cd87645e9a06a33ac5c967ab41d9e5c5bcbca42ab60afe9ef1b9ca', 0, '2020-03-16 07:28:30'),
+('f3bb49bf123bc8c055f5bbfbad9f886fe11ba142be2e860e4afe9365438401c2b675a770bf4b90c5', '9b37101838342a0173031261deedae01ba3166ed20701d4ebe10b98cd16bf5df60d20d60b8065bd9', 0, '2020-03-22 10:20:03'),
+('f5ded3b6a0b82da79d36a23e16249ef1fa455193e42239a80efa37aaa5c1391e60ee85d42d6ea748', 'b70ab445d38bf21ac4d517c793d97ba70c99732cad94cdebe24aa41fcc1784b074d825ce31cd5fe0', 0, '2020-03-18 13:04:07'),
+('f98965366930d935695a04b48b1cf5d8345770422df228c106c01b559e02ba7c853f3b9515f99ed9', '926668e3f498955df138b4831e0b80368a52b69020ac4e66746cd13f90a4850f7b28dd816df56acf', 0, '2020-04-08 10:01:47'),
+('fad930a5fd06b5a98b41dd0f94e241dd8ef7d5410675e348e98c6323a367e57a2e13b34ba475f65c', '6802bc7364e652868502d98a011ee32a1f11e738eb960f4348358538c93e8d10656c3b0e6942120f', 0, '2020-03-19 09:36:09'),
+('fadff24266cff00bffdeb7090ccef22e3ad8a7d9de7f8e94f2ade0bc43b2c509ddaabb7b64588a37', 'ae537adb351108db170c302fe945f7d6b31d71fb910c87f6e5228509fce4a128cb5f9d3c7ad5938d', 0, '2020-03-21 14:26:56'),
+('fbce8b8366db050d7c68d30d5e135d403a16e0024591e37dd7c6d451f01ec20775cc6f05c62879a1', 'e4feb4cb34170b87c0b6682bef743ddf67576c73602e2ad656c46e144fb39e3ff841bf8cc3fef4e8', 0, '2020-03-21 14:30:04'),
+('feca4788eb6be87b8f237e27f6c5abdde41e3f1af8f08d0aa8ddf068c52a196f9a497bdc87ed97d0', '1fcd4e0df28f2d005c6b50b88856dadc71da33e9c9f664f755f124a51a35877cbfe6149ac3827b93', 0, '2020-03-16 05:59:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orderaddon`
+--
+
+DROP TABLE IF EXISTS `orderaddon`;
+CREATE TABLE IF NOT EXISTS `orderaddon` (
+  `oaoId` int(11) NOT NULL AUTO_INCREMENT,
+  `oaoOdId` int(11) NOT NULL,
+  `oaoRfaoId` int(11) NOT NULL,
+  `oaoRfaoPrice` float(10,2) NOT NULL,
+  PRIMARY KEY (`oaoId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orderdetails`
+--
+
+DROP TABLE IF EXISTS `orderdetails`;
+CREATE TABLE IF NOT EXISTS `orderdetails` (
+  `odId` int(11) NOT NULL AUTO_INCREMENT,
+  `odOfiId` int(11) NOT NULL,
+  `odRfId` int(11) NOT NULL,
+  `odQty` int(11) NOT NULL,
+  `odAmount` float(10,2) NOT NULL,
+  `odTotal` float(10,2) NOT NULL,
+  PRIMARY KEY (`odId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orderearnings`
+--
+
+DROP TABLE IF EXISTS `orderearnings`;
+CREATE TABLE IF NOT EXISTS `orderearnings` (
+  `oeId` int(11) NOT NULL,
+  `oeOfiId` int(11) NOT NULL,
+  `oeAdminCommision` float(10,2) NOT NULL,
+  `oeRestPay` float(10,2) NOT NULL,
+  `oeRestPaidStatus` tinyint(1) NOT NULL DEFAULT '0',
+  `oeRadPay` float(10,2) NOT NULL,
+  `oeRadPaidStatus` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orderfooditeam`
+--
+
+DROP TABLE IF EXISTS `orderfooditeam`;
+CREATE TABLE IF NOT EXISTS `orderfooditeam` (
+  `ofiId` int(11) NOT NULL AUTO_INCREMENT,
+  `ofiRestId` int(11) NOT NULL,
+  `ofiUId` int(11) NOT NULL,
+  `ofiRadId` int(11) NOT NULL,
+  `ofiAoffId` int(11) NOT NULL,
+  `ofiIteamTotal` float(10,2) NOT NULL,
+  `ofiOfferAmount` float(10,2) NOT NULL,
+  `ofiServiceAmount` float(10,2) NOT NULL,
+  `ofiRaiderTips` float(10,2) NOT NULL,
+  `ofiPaidAmount` float(10,2) NOT NULL,
+  `ofiStatus` tinyint(1) NOT NULL,
+  PRIMARY KEY (`ofiId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orderrating`
+--
+
+DROP TABLE IF EXISTS `orderrating`;
+CREATE TABLE IF NOT EXISTS `orderrating` (
+  `orId` int(11) NOT NULL AUTO_INCREMENT,
+  `orOfiId` int(11) NOT NULL,
+  `orCusRestRating` float(1,1) NOT NULL,
+  `orCusRestComments` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `orCusRadRating` float(1,1) NOT NULL,
+  `orCusRadComments` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `orRadRestRating` float(1,1) NOT NULL,
+  `orRadRestComments` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `orRadCusRating` float(1,1) NOT NULL,
+  `orRadCusComments` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`orId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ordertimings`
+--
+
+DROP TABLE IF EXISTS `ordertimings`;
+CREATE TABLE IF NOT EXISTS `ordertimings` (
+  `otId` int(11) NOT NULL AUTO_INCREMENT,
+  `otOfiId` int(11) NOT NULL,
+  `otCusRequest` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `otCusCancel` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `otRestAcceptOrReject` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `otRestDone` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `otRadAccept` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `otRadReached` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `otRadPickUp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `otRadDelivery` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `otRadToRest` multilinestring NOT NULL,
+  `otRadToRestKm` float(2,1) NOT NULL,
+  `otRestToCus` multilinestring NOT NULL,
+  `otRestToCusKm` float(2,1) NOT NULL,
+  PRIMARY KEY (`otId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `raideraddress`
+--
+
+DROP TABLE IF EXISTS `raideraddress`;
+CREATE TABLE IF NOT EXISTS `raideraddress` (
+  `raddId` int(11) NOT NULL AUTO_INCREMENT,
+  `raddRadId` int(11) NOT NULL,
+  `raddAddress1` int(11) NOT NULL,
+  `raddAddress2` int(11) NOT NULL,
+  `raddCity` int(11) NOT NULL,
+  `raddState` int(11) NOT NULL,
+  `raddZipCode` int(11) NOT NULL,
+  PRIMARY KEY (`raddId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `raiders`
+--
+
+DROP TABLE IF EXISTS `raiders`;
+CREATE TABLE IF NOT EXISTS `raiders` (
+  `radId` int(11) NOT NULL AUTO_INCREMENT,
+  `radFirstName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radLastName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radEmail` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radPhone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radSSN` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radLicenceNumber` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radVechileNumber` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radBankName` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radAcNumber` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radRoutingNumber` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `radStatus` tinyint(1) NOT NULL,
+  `radCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `radUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`radId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restaddon`
+--
+
+DROP TABLE IF EXISTS `restaddon`;
+CREATE TABLE IF NOT EXISTS `restaddon` (
+  `raoId` int(11) NOT NULL AUTO_INCREMENT,
+  `raoRaogId` int(11) NOT NULL,
+  `raoName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `raoCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `raoUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`raoId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restaddongroup`
+--
+
+DROP TABLE IF EXISTS `restaddongroup`;
+CREATE TABLE IF NOT EXISTS `restaddongroup` (
+  `raogId` int(11) NOT NULL AUTO_INCREMENT,
+  `raogRestId` int(11) NOT NULL,
+  `raogName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `raogCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `raogUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`raogId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restadmin`
+--
+
+DROP TABLE IF EXISTS `restadmin`;
+CREATE TABLE IF NOT EXISTS `restadmin` (
+  `raId` int(11) NOT NULL AUTO_INCREMENT,
+  `raRestId` int(11) NOT NULL,
+  `raFirstName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `raLastName` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `raEmail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `raPhone` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `raPassword` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `raRememberToken` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `raCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `raUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`raId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restaurant`
+--
+
+DROP TABLE IF EXISTS `restaurant`;
+CREATE TABLE IF NOT EXISTS `restaurant` (
+  `restId` int(11) NOT NULL AUTO_INCREMENT,
+  `restName` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `restAddress1` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `restAddress2` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `restCity` smallint(6) NOT NULL,
+  `restZipCode` smallint(6) NOT NULL,
+  `restLat` decimal(10,8) NOT NULL,
+  `restLng` decimal(11,8) NOT NULL,
+  `restPreparationTime` int(11) NOT NULL,
+  `restPackingCharge` int(11) NOT NULL,
+  `restAdminComission` int(11) NOT NULL,
+  `restMinOrderAmount` int(11) NOT NULL,
+  `restMode` tinyint(1) NOT NULL,
+  `restStatus` tinyint(1) NOT NULL,
+  `restCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `restUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`restId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restcuisines`
+--
+
+DROP TABLE IF EXISTS `restcuisines`;
+CREATE TABLE IF NOT EXISTS `restcuisines` (
+  `rcusinId` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `rcusinRestId` smallint(6) NOT NULL,
+  `rcusinCusinId` tinyint(4) NOT NULL,
+  `rcusinCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `rcusinUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`rcusinId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restfood`
+--
+
+DROP TABLE IF EXISTS `restfood`;
+CREATE TABLE IF NOT EXISTS `restfood` (
+  `rfId` int(11) NOT NULL AUTO_INCREMENT,
+  `rfRestId` int(11) NOT NULL,
+  `rfName` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rfPrice` float(10,2) NOT NULL,
+  `rfPreparationTime` tinyint(4) NOT NULL,
+  `rfType` tinyint(1) NOT NULL,
+  `rfRmenuId` int(11) NOT NULL,
+  `rfRsmId` int(11) NOT NULL,
+  `rfStatus` tinyint(1) NOT NULL,
+  `rfCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `rfUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`rfId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restfoodaddon`
+--
+
+DROP TABLE IF EXISTS `restfoodaddon`;
+CREATE TABLE IF NOT EXISTS `restfoodaddon` (
+  `rfaoId` int(11) NOT NULL AUTO_INCREMENT,
+  `rfaoRfaogId` int(11) NOT NULL,
+  `rfaoRaoId` int(11) NOT NULL,
+  `rfaoPrice` float(10,2) NOT NULL,
+  PRIMARY KEY (`rfaoId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restfoodaddongroup`
+--
+
+DROP TABLE IF EXISTS `restfoodaddongroup`;
+CREATE TABLE IF NOT EXISTS `restfoodaddongroup` (
+  `rfaogId` int(11) NOT NULL,
+  `rfaogRfId` int(11) NOT NULL,
+  `rfaogRaogId` int(11) NOT NULL,
+  `rfaogRequired` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restmenu`
+--
+
+DROP TABLE IF EXISTS `restmenu`;
+CREATE TABLE IF NOT EXISTS `restmenu` (
+  `rmenuId` int(11) NOT NULL AUTO_INCREMENT,
+  `rmenuRestId` int(11) NOT NULL,
+  `rmenuName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rmenuOrder` tinyint(2) NOT NULL,
+  `rmenuStatus` tinyint(1) NOT NULL,
+  `rmenuCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `rmenuUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`rmenuId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `restsubmenu`
+--
+
+DROP TABLE IF EXISTS `restsubmenu`;
+CREATE TABLE IF NOT EXISTS `restsubmenu` (
+  `rsmId` int(11) NOT NULL AUTO_INCREMENT,
+  `rsmRmenuId` int(11) NOT NULL,
+  `rsmName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rsmStatus` tinyint(1) NOT NULL,
+  `rsmCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `rsmUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`rsmId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `resttimings`
+--
+
+DROP TABLE IF EXISTS `resttimings`;
+CREATE TABLE IF NOT EXISTS `resttimings` (
+  `rtId` int(11) NOT NULL AUTO_INCREMENT,
+  `rtRestId` int(11) NOT NULL,
+  `rtDay` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rtDayOff` tinyint(1) NOT NULL,
+  `rtOpenTime` time NOT NULL,
+  `rtCloseTime` time NOT NULL,
+  PRIMARY KEY (`rtId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role`) VALUES
+(1, 'superadmin'),
+(2, 'admin'),
+(3, 'user');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sitesettings`
+--
+
+DROP TABLE IF EXISTS `sitesettings`;
+CREATE TABLE IF NOT EXISTS `sitesettings` (
+  `ssId` int(11) NOT NULL AUTO_INCREMENT,
+  `ssSiteName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ssEmail` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ssNoReplyEmail` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ssPhone` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ssMobile` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ssMode` tinyint(1) NOT NULL,
+  `ssMetaTitle` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ssMetaKeyword` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ssMetaDescription` varchar(3000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ssStartTime` time NOT NULL,
+  `ssEndTime` time NOT NULL,
+  `ssCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ssUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`ssId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `smtpsettings`
+--
+
+DROP TABLE IF EXISTS `smtpsettings`;
+CREATE TABLE IF NOT EXISTS `smtpsettings` (
+  `smtpId` int(11) NOT NULL,
+  `smtpHost` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `smtpPort` smallint(4) NOT NULL,
+  `smtpUserName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `smtpPassword` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `smtpSecurityLayer` tinyint(4) NOT NULL,
+  `smtpCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `smtpUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `smtpDeletedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `states`
+--
+
+DROP TABLE IF EXISTS `states`;
+CREATE TABLE IF NOT EXISTS `states` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `abbr` varchar(2) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `states`
+--
+
+INSERT INTO `states` (`id`, `abbr`, `name`) VALUES
+(1, 'AL', 'Alabama'),
+(2, 'AK', 'Alaska'),
+(3, 'AZ', 'Arizona'),
+(4, 'AR', 'Arkansas'),
+(5, 'CA', 'California'),
+(6, 'CO', 'Colorado'),
+(7, 'CT', 'Connecticut'),
+(8, 'DE', 'Delaware'),
+(9, 'DC', 'District of Columbia'),
+(10, 'FL', 'Florida'),
+(11, 'GA', 'Georgia'),
+(12, 'HI', 'Hawaii'),
+(13, 'ID', 'Idaho'),
+(14, 'IL', 'Illinois'),
+(15, 'IN', 'Indiana'),
+(16, 'IA', 'Iowa'),
+(17, 'KS', 'Kansas'),
+(18, 'KY', 'Kentucky'),
+(19, 'LA', 'Louisiana'),
+(20, 'ME', 'Maine'),
+(21, 'MD', 'Maryland'),
+(22, 'MA', 'Massachusetts'),
+(23, 'MI', 'Michigan'),
+(24, 'MN', 'Minnesota'),
+(25, 'MS', 'Mississippi'),
+(26, 'MO', 'Missouri'),
+(27, 'MT', 'Montana'),
+(28, 'NE', 'Nebraska'),
+(29, 'NV', 'Nevada'),
+(30, 'NH', 'New Hampshire'),
+(31, 'NJ', 'New Jersey'),
+(32, 'NM', 'New Mexico'),
+(33, 'NY', 'New York'),
+(34, 'NC', 'North Carolina'),
+(35, 'ND', 'North Dakota'),
+(36, 'OH', 'Ohio'),
+(37, 'OK', 'Oklahoma'),
+(38, 'OR', 'Oregon'),
+(39, 'PA', 'Pennsylvania'),
+(40, 'RI', 'Rhode Island'),
+(41, 'SC', 'South Carolina'),
+(42, 'SD', 'South Dakota'),
+(43, 'TN', 'Tennessee'),
+(44, 'TX', 'Texas'),
+(45, 'UT', 'Utah'),
+(46, 'VT', 'Vermont'),
+(47, 'VA', 'Virginia'),
+(48, 'WA', 'Washington'),
+(49, 'WV', 'West Virginia'),
+(50, 'WI', 'Wisconsin'),
+(51, 'WY', 'Wyoming');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taxs`
+--
+
+DROP TABLE IF EXISTS `taxs`;
+CREATE TABLE IF NOT EXISTS `taxs` (
+  `taxId` int(11) NOT NULL AUTO_INCREMENT,
+  `taxTitle` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `taxPercentage` float(2,2) NOT NULL,
+  `taxStatus` tinyint(1) NOT NULL,
+  `taxCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `taxUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`taxId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `uId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `uFirstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uMiddleName` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uLastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uEmail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uPhone` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_id` int(5) NOT NULL,
+  `uEmailVerifiedAt` timestamp NULL DEFAULT NULL,
+  `uPassword` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uRememberToken` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uCreatedAt` timestamp NULL DEFAULT NULL,
+  `uUpdatedAt` timestamp NULL DEFAULT NULL,
+  `uDeletedAt` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`uId`),
+  UNIQUE KEY `users_email_unique` (`uEmail`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`uId`, `uFirstName`, `uMiddleName`, `uLastName`, `uEmail`, `uPhone`, `role_id`, `uEmailVerifiedAt`, `uPassword`, `uRememberToken`, `uCreatedAt`, `uUpdatedAt`, `uDeletedAt`) VALUES
+(1, 'admin', '', '', 'admin@kopatech.com', '', 1, NULL, '$2y$10$6Ksg2vVCXpGBHeumNSO.jOvzm354oweUpNR2wzv1OZEo9mdOuNpsm', NULL, '2019-01-04 22:56:57', '2019-01-04 22:56:57', NULL),
+(3, 'John', 'Paul', 'Raja', 'raja@mail.com', '9999999999', 1, NULL, '$2y$10$t8X36yvh6neg1W.gK8lsVu9et2RSlNKW44FnEQXDO4gQBcRjFyMFS', NULL, '2019-04-20 06:14:39', '2019-04-20 06:14:39', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `withdrawsettings`
+--
+
+DROP TABLE IF EXISTS `withdrawsettings`;
+CREATE TABLE IF NOT EXISTS `withdrawsettings` (
+  `wsId` int(11) NOT NULL AUTO_INCREMENT,
+  `wsRestaurantMin` smallint(6) NOT NULL,
+  `wsRestaurantMax` int(11) NOT NULL,
+  `wsRestaurantTimes` tinyint(1) NOT NULL,
+  `wsDriverMin` smallint(6) NOT NULL,
+  `wsDriverMax` int(11) NOT NULL,
+  `wsDriverTimes` tinyint(1) NOT NULL,
+  `wsCreatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `wsUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`wsId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `oauth_access_token_providers`
+--
+ALTER TABLE `oauth_access_token_providers`
+  ADD CONSTRAINT `oauth_access_token_providers_oauth_access_token_id_foreign` FOREIGN KEY (`oauth_access_token_id`) REFERENCES `oauth_access_tokens` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

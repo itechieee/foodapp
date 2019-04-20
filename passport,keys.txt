@@ -1,0 +1,8 @@
+C:\wamp\www\dem>php artisan passport:install
+Encryption keys generated successfully.
+Personal access client created successfully.
+Client ID: 5
+Client secret: kd5kRF985NC9P6rAAV05PJbDqYj2E8JmzCzpt0sp
+Password grant client created successfully.
+Client ID: 6
+Client secret: 3IpS42UOdHiAbyxOLRVLkxg1N29ng9JFg3NRiGNm
