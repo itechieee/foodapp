@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "33ce87bc-f8bc-4faa-b68b-18a9f3ede1f5",
+		"name": "FoodDelivery",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstname\" : \"John\",\n\t\"lastname\": \"Paul\",\n\t\"middlename\": \"Raja\",\n\t\"email\": \"raja@mail.com\",\n\t\"password\": \"password123\",\n\t\"confirm_password\": \"password123\",\n\t\"phone\": \"9999999999\",\n\t\"role\": \"1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/dem/public/api/v1/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"dem",
+						"public",
+						"api",
+						"v1",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"raja@mail.com\",\n\t\"password\": \"password123s\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost/dem/public/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"dem",
+						"public",
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
