@@ -14,7 +14,7 @@ class HomeController extends BaseController
     | This controller for index home page
     |
     */
-    
+       
     public function index() {
         return view('home.index');
     }

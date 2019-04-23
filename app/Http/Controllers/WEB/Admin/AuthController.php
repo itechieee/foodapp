@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\WEB;
+namespace App\Http\Controllers\WEB\Admin;
 
 use App\Http\Controllers\WEB\BaseController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -50,26 +50,17 @@ class AuthController extends BaseController
      */
     public function login()
     {
-        if(Auth::check()) {
-            if(Auth::user()->role_id == 1) {
-                return redirect('/admin');
-            }
-            return redirect('/restaurant');
-        }
-        return view('auth.login');
+        return view('admin.login');
     }
 
     public function authenticate(LoginRequest $request)
     {
         $input = $request->only('email', 'password');
-        $check = Auth::attempt(['uEmail' => $input['email'],'password' => $input['password']]);
+        $check = Auth::attempt(['uEmail' => $input['email'],'password' => $input['password'], 'role_id' => 1]);
         if($check){
             /** Authentication Success */
             $user = Auth::user();
-            if($user->role_id == 1) {
-                return redirect()->route('web.admin.dashboard');
-            }
-            return redirect()->route('web.restaurant.dashboard');
+            return redirect()->route('web.admin.dashboard');
         }else{
             /** Authentication Failed */
             return redirect()->back()->withErrors('Invalid Email/Password');
