@@ -25,17 +25,11 @@ Route::post('/login', ['uses' => 'WEB\AuthController@authenticate', 'as' => 'web
 
 
 Route::group(['middleware' => ['auth']], function () {
-
-
-    // Route::get('/', function () {
-    //         return view('welcome');
-    //     });
-
-
+  
     Route::get('auth/logout', ['uses' => 'WEB\BaseController@logout', 'as' => 'logout']);
     
     // Admin Routes 
-    Route::group(['prefix' => 'admin'], function () {
+    Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
         Route::get('/', ['uses' => 'WEB\Admin\AdminController@index', 'as' => 'web.admin.dashboard']);
     });
 
@@ -43,4 +37,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'restaurant'], function () {
         Route::get('/', ['uses' => 'WEB\Restaurant\RestaurantController@index', 'as' => 'web.restaurant.dashboard']);
     });
+
+    
 });

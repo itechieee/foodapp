@@ -50,6 +50,12 @@ class AuthController extends BaseController
      */
     public function login()
     {
+        if(Auth::check()) {
+            if(Auth::user()->role_id == 1) {
+                return redirect('/admin');
+            }
+            return redirect('/restaurant');
+        }
         return view('auth.login');
     }
 
