@@ -5,18 +5,22 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, SoftDeletes, Notifiable;    
 
+    protected $table = 'users';
+    protected $primaryKey = 'uId';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'uFirstName', 'uMiddleName', 'uLastName','uEmail','uPhone', 'role_id' ,'uEmailVerifiedAt','uPassword','uRememberToken','uCreatedAt', 'uUpdatedAt','uDeletedAt'
     ];
 
     /**
@@ -25,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'uPassword', 'uRememberToken',
     ];
 
     /**
@@ -34,6 +38,23 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'uEmailVerifiedAt' => 'datetime',
     ];
+
+    /**
+     * The name of the "created at" column.
+     *
+     * @var string
+     */
+    const CREATED_AT = 'uCreatedAt';
+
+    /**
+     * The name of the "updated at" column.
+     *
+     * @var string
+     */
+    const UPDATED_AT = 'uUpdatedAt';
+
+    protected $dates = ['uDeletedAt'];
+    const DELETED_AT = 'uDeletedAt';
 }

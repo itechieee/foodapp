@@ -57,4 +57,10 @@ class User extends Authenticatable
 
     protected $dates = ['uDeletedAt'];
     const DELETED_AT = 'uDeletedAt';
+
+    public function getAuthPassword()
+    {
+        return $this->uPassword;
+    }
+
 }
