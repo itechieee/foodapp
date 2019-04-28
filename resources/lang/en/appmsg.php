@@ -37,4 +37,6 @@ return [
 	'1020' => 'User created successfully',
 	'1021' => 'The Phone field is required',
 	'1022' => 'The Phone field is invalid',
+	'1023' => 'Invalid Username/Password',
+	'1024' => 'Invalid Token',
 ];

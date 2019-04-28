@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Repositories\User;
+namespace App\Repositories\API\RestaurantUser;
 
 use App\Repositories\EloquentAbstractRepository;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 
-class EloquentUserRepository extends EloquentAbstractRepository implements UserRepository
+class EloquentRestaurantUserRepository extends EloquentAbstractRepository implements RestaurantUserRepository
 {
     public $hasher;
 
@@ -38,7 +38,7 @@ class EloquentUserRepository extends EloquentAbstractRepository implements UserR
     public function authenticate($credentials)
     {
         if ($user = $this->findBy('uEmail', '=', $credentials['email'])->first()) {
-            if ($this->hasher->check($credentials['password'], $user->uPassword) && $user->role_id == env('RESTAURNAT_ROLE')) {
+            if ($this->hasher->check($credentials['password'], $user->uPassword) && $user->role_id == env('RESTAURANT_ROLE')) {
                 return $user;
             }
         }

@@ -7,24 +7,24 @@ use Event;
 use JWTAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
-use App\Repositories\User\UserRepository;
+use App\Repositories\API\CustomerUser\CustomerUserRepository;
 use App\Exceptions\AppUnauthorizedException;
 
-class AuthControllerHelper
+class CustomerControllerHelper
 {
-    public $user;
+    public $customer;
     public $status;
     /**
-     * @param \User $users
+     * @param \Customer $customer
      */
-    public function __construct(UserRepository $user, HasherContract $hasher)
+    public function __construct(CustomerUserRepository $customer, HasherContract $hasher)
     {
-        $this->user = $user;
+        $this->customer = $customer;
     }
 
     public function findOrCreate($data)
     {
-        if ($this->user->isExists($data['role'], 'uEmail',$data['email']) == 0) {
+        if ($this->customer->isExists($data['role'], 'uEmail',$data['email']) == 0) {
             return $this->createUser($data);
         }
 
@@ -35,7 +35,7 @@ class AuthControllerHelper
     {
         $formatUserData = $this->formatUser($data);
         DB::transaction(function () use ($formatUserData) {
-            $user = $this->user->create($formatUserData);
+            $user = $this->customer->create($formatUserData);
         });
         return 1020;
     }
@@ -54,7 +54,7 @@ class AuthControllerHelper
 
     public function checkAuth($credentials)
     {
-        if ($user = $this->user->authenticate($credentials)) {
+        if ($user = $this->customer->authenticate($credentials)) {
             return $user->createToken('AppName')-> accessToken;
         } 
         

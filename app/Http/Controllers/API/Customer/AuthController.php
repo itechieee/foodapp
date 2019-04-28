@@ -1,30 +1,29 @@
 <?php
 
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Customer;
 
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Requests\API\Auth\UserRegisterRequest;
 use App\Http\Requests\API\Auth\LoginUserRequest;
-use App\Model\User;
 use Validator;
 use App\Exceptions\AppNotFoundException;
-use App\Repositories\User\UserRepository;
-use App\Http\Helpers\AuthControllerHelper;
+use App\Repositories\API\CustomerUser\CustomerUserRepository;
+use App\Http\Helpers\CustomerControllerHelper;
 
 class AuthController extends BaseController
 {
-    public $user;
+    public $customer;
     /**
      * AuthController constructor.
      *
      * @param PostRepositoryInterface $post
      */
-    public function __construct(UserRepository $user)
+    public function __construct(CustomerUserRepository $customer)
     {
-        $this->user = $user;
+        $this->customer = $customer;
     }
 
     /**
@@ -32,22 +31,16 @@ class AuthController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function register(UserRegisterRequest $request, AuthControllerHelper $authHelper) { 
+    public function register(UserRegisterRequest $request, CustomerControllerHelper $authHelper) { 
         $code = $authHelper->findOrCreate($request->all());
         return $this->respondCreated($code);
     }
          
           
-    public function login(LoginUserRequest $request, AuthControllerHelper $authHelper){ 
+    public function login(LoginUserRequest $request, CustomerControllerHelper $authHelper){ 
         $credentials = $request->only('email', 'password');
         $token = $authHelper->checkAuth($credentials);
         return $this->successResponse(['token' => $token]);            
     }
          
-    // public function getUser() {
-    //     $user = Auth::user();
-    //     return response()->json(['success' => $user], $this->successStatus); 
-    // }
-
-
 }

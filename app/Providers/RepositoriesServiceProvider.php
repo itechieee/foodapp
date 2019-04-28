@@ -14,7 +14,10 @@ class RepositoriesServiceProvider extends ServiceProvider
     protected $defer = false;
 
     protected $entities = [
-        'User'
+        'User',
+        'RestaurantUser',
+        'CustomerUser',
+        'DriverUser'
     ];
 
     /**
@@ -32,6 +35,30 @@ class RepositoriesServiceProvider extends ServiceProvider
         $this->app->bind(
             'App\Repositories\User\UserRepository',
             'App\Repositories\User\EloquentUserRepository'
+        );
+    }
+
+    protected function bindRestaurantUserRepository()
+    {
+        $this->app->bind(
+            'App\Repositories\API\RestaurantUser\RestaurantUserRepository',
+            'App\Repositories\API\RestaurantUser\EloquentRestaurantUserRepository'
+        );
+    }
+
+    protected function bindCustomerUserRepository()
+    {
+        $this->app->bind(
+            'App\Repositories\API\CustomerUser\CustomerUserRepository',
+            'App\Repositories\API\CustomerUser\EloquentCustomerUserRepository'
+        );
+    }
+
+    protected function bindDriverUserRepository()
+    {
+        $this->app->bind(
+            'App\Repositories\API\DriverUser\DriverUserRepository',
+            'App\Repositories\API\DriverUser\EloquentDriverUserRepository'
         );
     }
 }

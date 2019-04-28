@@ -7,24 +7,24 @@ use Event;
 use JWTAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
-use App\Repositories\User\UserRepository;
+use App\Repositories\API\RestaurantUser\RestaurantUserRepository;
 use App\Exceptions\AppUnauthorizedException;
 
-class AuthControllerHelper
+class RestaurantControllerHelper
 {
-    public $user;
+    public $restaurant;
     public $status;
     /**
-     * @param \User $users
+     * @param \Restaurant $restaurant
      */
-    public function __construct(UserRepository $user, HasherContract $hasher)
+    public function __construct(RestaurantUserRepository $restaurant, HasherContract $hasher)
     {
-        $this->user = $user;
+        $this->restaurant = $restaurant;
     }
 
     public function findOrCreate($data)
     {
-        if ($this->user->isExists($data['role'], 'uEmail',$data['email']) == 0) {
+        if ($this->restaurant->isExists($data['role'], 'uEmail',$data['email']) == 0) {
             return $this->createUser($data);
         }
 
@@ -54,7 +54,7 @@ class AuthControllerHelper
 
     public function checkAuth($credentials)
     {
-        if ($user = $this->user->authenticate($credentials)) {
+        if ($user = $this->restaurant->authenticate($credentials)) {
             return $user->createToken('AppName')-> accessToken;
         } 
         

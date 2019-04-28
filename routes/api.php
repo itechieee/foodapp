@@ -17,10 +17,34 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::prefix('v1')->group(function(){
-    Route::post('login', 'API\AuthController@login');
-    Route::post('register', 'API\AuthController@register');
-    // Route::group(['middleware' => 'auth:api'], function(){
-    //     Route::post('getUser', 'API\AuthController@getUser');
-    // });
+// Restaurant 
+Route::prefix('restaurant/v1')->group(function(){
+    Route::post('login', 'API\Restaurant\AuthController@login');
+    // Route::post('register', 'API\Restaurant\AuthController@register');
+
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('restaurantdetails', 'API\Restaurant\RestaurantController@restaurant_details');
+    });
+    
+});
+
+// Customer 
+Route::prefix('customer/v1')->group(function(){
+    Route::post('login', 'API\Customer\AuthController@login');
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('customerdetails', 'API\Customer\CustomerController@customer_details');
+    });
+    
+});
+
+// Driver 
+Route::prefix('driver/v1')->group(function(){
+    Route::post('login', 'API\Driver\AuthController@login');
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('driverdetails', 'API\Driver\DriverController@driver_details');
+    });
+    
 });
