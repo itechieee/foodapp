@@ -14,12 +14,22 @@ class RestaurantTransformer extends Transformer
     {   
         $result = [];
         if($item->count() > 0) {
-            $result['id'] = $item->uId;
-            $result['firstname'] = $item->uFirstName;
-            $result['middlename'] = $item->uMiddleName;
-            $result['lastname'] = $item->uLastName;
-            $result['email'] = $item->uEmail;
-            $result['phone'] = $item->uPhone;
+            $result['id'] = $item->restId;
+            $result['name'] = $item->restName;
+            $result['address1'] = $item->restAddress1;
+            $result['address2'] = $item->restAddress2;
+            $result['city'] = $item->restCity;
+            $result['zipCode'] = $item->restZipCode;
+            $result['latitude'] = $item->restLat;
+            $result['longitude'] = $item->restLng;
+            $result['preparationTime'] = $item->restPreparationTime;
+            $result['packingCharge'] = $item->restPackingCharge;
+            $result['adminCommission'] = $item->restAdminComission;
+            $result['minOrderAmount'] = $item->restMinOrderAmount;
+            $result['mode'] = $item->restMode;
+            $result['status'] = $item->restStatus;
+            $result['createdAt'] = $item->created_at;
+            $result['updatedAt'] = $item->updated_at;
         }
         return $result;
     }

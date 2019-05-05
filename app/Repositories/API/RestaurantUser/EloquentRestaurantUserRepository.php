@@ -45,4 +45,9 @@ class EloquentRestaurantUserRepository extends EloquentAbstractRepository implem
 
         return false;
     }
+
+    public function restaurant($userId)
+    {
+        return $this->getModel()->find($userId)->restaurant()->first();
+    }
 }

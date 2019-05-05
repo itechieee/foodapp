@@ -16,19 +16,19 @@ use Auth;
 
 class RestaurantController extends BaseController
 {
-    public $restaurant;
+    public $restaurantUser;
     /**
      * RestaurantController constructor.
      *
      * @param PostRepositoryInterface $post
      */
-    public function __construct(RestaurantUserRepository $restaurant)
+    public function __construct(RestaurantUserRepository $restaurantUser)
     {
-        $this->restaurant = $restaurant;
+        $this->restaurantUser = $restaurantUser;
     }
 
     public function restaurant_details(RestaurantTransformer $restaurantTransformer) {
-        $restaurant = $restaurantTransformer->transformRestaurant(Auth::user());
+        $restaurant = $restaurantTransformer->transformRestaurant($this->restaurantUser->restaurant(Auth::user()->uId));
         return $this->successResponse($restaurant);    
     }
 }

@@ -63,4 +63,9 @@ class User extends Authenticatable
         return $this->uPassword;
     }
 
+    public function restaurant()
+    {
+        return $this->hasOne('App\Model\Restaurant','userId', 'uId');
+    }
+
 }
