@@ -28,7 +28,7 @@ class DriverController extends BaseController
     }
 
     public function driver_details(DriverTransformer $driverTransformer) {
-        $driver = $driverTransformer->transformDriver(Auth::user());
+        $driver = $driverTransformer->transformDriver($this->driverUser->driver(Auth::user()->uId));
         return $this->successResponse($driver);    
     }
 }

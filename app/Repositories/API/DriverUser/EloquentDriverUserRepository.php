@@ -45,4 +45,9 @@ class EloquentDriverUserRepository extends EloquentAbstractRepository implements
 
         return false;
     }
+
+    public function driver($userId)
+    {
+        return $this->getModel()->find($userId)->driver()->first();
+    }
 }

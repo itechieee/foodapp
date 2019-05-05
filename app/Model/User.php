@@ -68,4 +68,9 @@ class User extends Authenticatable
         return $this->hasOne('App\Model\Restaurant','userId', 'uId');
     }
 
+    public function driver()
+    {
+        return $this->hasOne('App\Model\Driver','userId', 'uId');
+    }
+
 }
