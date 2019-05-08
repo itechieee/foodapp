@@ -40,8 +40,8 @@ class AuthController extends BaseController
           
     public function login(LoginUserRequest $request, RestaurantControllerHelper $authHelper){ 
         $credentials = $request->only('email', 'password');
-        $token = $authHelper->checkAuth($credentials);
-        return $this->successResponse(['token' => $token]);            
+        $user = $authHelper->checkRestaurantUserAuth($credentials);
+        return $this->successResponse($user);            
     }
          
 }

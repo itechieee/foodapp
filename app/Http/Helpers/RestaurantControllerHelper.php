@@ -12,19 +12,19 @@ use App\Exceptions\AppUnauthorizedException;
 
 class RestaurantControllerHelper
 {
-    public $restaurant;
+    public $restaurantUser;
     public $status;
     /**
      * @param \Restaurant $restaurant
      */
-    public function __construct(RestaurantUserRepository $restaurant, HasherContract $hasher)
+    public function __construct(RestaurantUserRepository $restaurantUser, HasherContract $hasher)
     {
-        $this->restaurant = $restaurant;
+        $this->restaurantUser = $restaurantUser;
     }
 
     public function findOrCreate($data)
     {
-        if ($this->restaurant->isExists($data['role'], 'uEmail',$data['email']) == 0) {
+        if ($this->restaurantUser->isExists($data['role'], 'uEmail',$data['email']) == 0) {
             return $this->createUser($data);
         }
 
@@ -54,10 +54,20 @@ class RestaurantControllerHelper
 
     public function checkAuth($credentials)
     {
-        if ($user = $this->restaurant->authenticate($credentials)) {
-            return $user->createToken('AppName')-> accessToken;
-        } 
-        
+        if ($user = $this->restaurantUser->authenticate($credentials)) {
+            return $user;
+        }         
+        throw new AppUnauthorizedException(1023);
+    }
+
+    public function checkRestaurantUserAuth($credentials)
+    {
+        $user = $this->checkAuth($credentials);
+        if($user->restaurant()->first('restId')) {
+            $result['token'] = $user->createToken('AppName')->accessToken;
+            $result['restaurant_id'] = $user->restaurant()->first('restId')->restId;
+            return $result;
+        }
         throw new AppUnauthorizedException(1023);
     }
 }
