@@ -39,4 +39,9 @@ return [
 	'1022' => 'The Phone field is invalid',
 	'1023' => 'Invalid Username/Password',
 	'1024' => 'Invalid Token',
+	'1025' => 'The restaurant id field is required',
+	'1026' => 'The restaurant id field should be numeric',
+	'1027' => 'The user id field is required',
+	'1028' => 'The user id field should be numeric',
+	'1029' => 'Unauthorized User'
 ];

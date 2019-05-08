@@ -24,7 +24,7 @@ Route::prefix('restaurant/v1')->group(function(){
 
 
     Route::group(['middleware' => ['auth:api']], function () {
-        Route::get('restaurantdetails', 'API\Restaurant\RestaurantController@restaurant_details');
+        Route::post('restaurantdetails', 'API\Restaurant\RestaurantController@restaurant_details');
     });
     
 });

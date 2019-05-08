@@ -12,6 +12,7 @@ use Validator;
 use App\Exceptions\AppNotFoundException;
 use App\Repositories\API\RestaurantUser\RestaurantUserRepository;
 use App\Http\Transformers\API\RestaurantTransformer;
+use App\Http\Requests\API\Restaurant\RestaurantDetailRequest;
 use Auth;
 
 class RestaurantController extends BaseController
@@ -27,7 +28,9 @@ class RestaurantController extends BaseController
         $this->restaurantUser = $restaurantUser;
     }
 
-    public function restaurant_details(RestaurantTransformer $restaurantTransformer) {
+    public function restaurant_details(RestaurantDetailRequest $request,RestaurantTransformer $restaurantTransformer) {
+        $data = $request->only('restaurant_id', 'user_id');
+        $this->restaurantUser->getRestaurantByUser($data);
         $restaurant = $restaurantTransformer->transformRestaurant($this->restaurantUser->restaurant(Auth::user()->uId));
         return $this->successResponse($restaurant);    
     }

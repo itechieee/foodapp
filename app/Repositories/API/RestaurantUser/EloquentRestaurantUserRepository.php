@@ -4,6 +4,8 @@ namespace App\Repositories\API\RestaurantUser;
 
 use App\Repositories\EloquentAbstractRepository;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
+use App\Exceptions\AppUnauthorizedException;
+use Auth;
 
 class EloquentRestaurantUserRepository extends EloquentAbstractRepository implements RestaurantUserRepository
 {
@@ -49,5 +51,21 @@ class EloquentRestaurantUserRepository extends EloquentAbstractRepository implem
     public function restaurant($userId)
     {
         return $this->getModel()->find($userId)->restaurant()->first();
+    }
+
+
+    public function getRestaurantByUser($data)
+    {
+        if(Auth::user()->uId != $data['user_id']) {
+            throw new AppUnauthorizedException(1029);
+        }
+
+        $restaurant = $this->restaurant(Auth::user()->uId);
+
+        if($restaurant->restId != $data['restaurant_id']) {
+            throw new AppUnauthorizedException(1029);
+        }
+        
+        return $restaurant;
     }
 }
